@@ -1,0 +1,12 @@
+<form>
+    <label name="template"/>
+    <field name="template" widget="selection"/>
+    <label name="filename"/>
+    <field name="filename"/>
+    <label name="unlinked"/>
+    <field name="unlinked"/>
+    <label name="resource"/>
+    <field name="resource"/>
+    <separator name="categories" colspan="4"/>
+    <field name="categories" colspan="4"/>
+</form>

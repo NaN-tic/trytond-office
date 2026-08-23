@@ -1,0 +1,402 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: office 8.0\n"
+"PO-Revision-Date: 2026-08-23 00:00+0200\n"
+"Last-Translator: NaN-tic\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "field:ir.attachment,content:"
+msgid "Content"
+msgstr "Contenido"
+
+msgctxt "field:office.attachment.export.start,format:"
+msgid "Output Format"
+msgstr "Formato de salida"
+
+msgctxt "field:ir.attachment,language:"
+msgid "Language"
+msgstr "Idioma"
+
+msgctxt "field:ir.attachment,mimetype:"
+msgid "Mimetype"
+msgstr "Tipo MIME"
+
+msgctxt "field:ir.attachment,reader_groups:"
+msgid "Reader Groups"
+msgstr "Grupos de lectores"
+
+msgctxt "field:ir.attachment,replaced_by:"
+msgid "Replaced By"
+msgstr "Sustituido por"
+
+msgctxt "field:ir.attachment,categories:"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "field:ir.attachment,categories_char:"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "field:ir.attachment,unlinked:"
+msgid "Unlinked"
+msgstr "Desvinculado"
+
+msgctxt "field:ir.attachment,writer_groups:"
+msgid "Writer Groups"
+msgstr "Grupos de escritores"
+
+msgctxt "selection:ir.attachment,type:"
+msgid "Text"
+msgstr "Texto"
+
+msgctxt "field:nantic.ai.configuration,office_title_model:"
+msgid "Office Title Model"
+msgstr "Modelo de títulos de Office"
+
+msgctxt "field:nantic.ai.configuration,office_language_model:"
+msgid "Office Language Model"
+msgstr "Modelo de idioma de Office"
+
+msgctxt "field:office.category,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:office.category,parent:"
+msgid "Parent"
+msgstr "Padre"
+
+msgctxt "field:office.category,children:"
+msgid "Children"
+msgstr "Hijos"
+
+msgctxt "field:office.category,description:"
+msgid "Description"
+msgstr "Descripción"
+
+msgctxt "field:office.category,required:"
+msgid "Required"
+msgstr "Requerido"
+
+msgctxt "field:office.category,unique:"
+msgid "Unique"
+msgstr "Único"
+
+msgctxt "field:office.category,view:"
+msgid "View"
+msgstr "Vista"
+
+msgctxt "field:office.category,read_only_groups:"
+msgid "Read-only Groups"
+msgstr "Grupos de solo lectura"
+
+msgctxt "field:office.category,read_only_users:"
+msgid "Read-only Users"
+msgstr "Usuarios de solo lectura"
+
+msgctxt "field:office.category,read_write_groups:"
+msgid "Read-write Groups"
+msgstr "Grupos de lectura y escritura"
+
+msgctxt "field:office.category,read_write_users:"
+msgid "Read-write Users"
+msgstr "Usuarios de lectura y escritura"
+
+msgctxt "model:office.unlinked,name:"
+msgid "Unlinked Attachments"
+msgstr "Adjuntos desvinculados"
+
+msgctxt "model:office.attachment-reader-group,name:"
+msgid "Attachment - Reader Group"
+msgstr "Adjunto - Grupo de lectores"
+
+msgctxt "model:office.attachment-writer-group,name:"
+msgid "Attachment - Writer Group"
+msgstr "Adjunto - Grupo de escritores"
+
+msgctxt "model:office.attachment-category,name:"
+msgid "Attachment - Category"
+msgstr "Adjunto - Categoría"
+
+msgctxt "model:office.category,name:"
+msgid "Office Category"
+msgstr "Categoría Office"
+
+msgctxt "model:ir.action,name:action_attachment"
+msgid "Documents & Attachments"
+msgstr "Documentos y adjuntos"
+
+msgctxt "model:ir.action,name:report_attachment_microsoft_office"
+msgid "Download as Microsoft Office"
+msgstr "Descargar en formato Microsoft Office"
+
+msgctxt "model:ir.action,name:report_attachment_open_document"
+msgid "Download as OpenDocument"
+msgstr "Descargar en formato Open Document"
+
+msgctxt "model:ir.action,name:report_attachment_pdf"
+msgid "Download as PDF"
+msgstr "Descargar en formato PDF"
+
+msgctxt "model:ir.action,name:wizard_attachment_export"
+msgid "Download as..."
+msgstr "Descargar en formato..."
+
+msgctxt "model:office.attachment.export.start,name:"
+msgid "Attachment Export Start"
+msgstr "Inicio de la exportación de adjuntos"
+
+msgctxt "model:ir.message,text:msg_attachment_conversion_failed"
+msgid "LibreOffice could not convert the attachment: %(error)s"
+msgstr "LibreOffice no ha podido convertir el adjunto: %(error)s"
+
+msgctxt "model:ir.message,text:msg_attachment_link_download_failed"
+msgid "The linked file could not be downloaded: %(error)s"
+msgstr "No se ha podido descargar el archivo enlazado: %(error)s"
+
+msgctxt "model:ir.message,text:msg_attachment_link_too_large"
+msgid "The linked file is larger than 100 MB."
+msgstr "El archivo enlazado supera los 100 MB."
+
+msgctxt "model:ir.message,text:msg_attachment_without_data"
+msgid "Attachment \"%(attachment)s\" has no file to download."
+msgstr "El adjunto \"%(attachment)s\" no tiene ningún archivo para descargar."
+
+msgctxt "model:ir.message,text:msg_invalid_attachment_link"
+msgid "The attachment link must use HTTP or HTTPS."
+msgstr "El enlace del adjunto debe utilizar HTTP o HTTPS."
+
+msgctxt "model:ir.message,text:msg_invalid_output_format"
+msgid "The selected output format is not valid."
+msgstr "El formato de salida seleccionado no es válido."
+
+msgctxt "model:ir.message,text:msg_no_attachments_selected"
+msgid "Select at least one attachment."
+msgstr "Seleccione al menos un adjunto."
+
+msgctxt "model:ir.message,text:msg_soffice_not_found"
+msgid "LibreOffice (soffice) is not installed on the server."
+msgstr "LibreOffice (soffice) no está instalado en el servidor."
+
+msgctxt "model:ir.message,text:msg_unnamed_document"
+msgid "unnamed document"
+msgstr "documento sin nombre"
+
+msgctxt "model:ir.action,name:action_attachment_by_category"
+msgid "Documents & Attachments by Category"
+msgstr "Documentos y adjuntos por categoría"
+
+msgctxt "model:ir.action,name:action_office_category"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "model:ir.action,name:action_office_category_tree"
+msgid "Category Tree"
+msgstr "Árbol de categorías"
+
+msgctxt "model:ir.message,text:msg_missing_categories"
+msgid "Attachment \"%(document)s\" must have one of the categories inside \"%(categories)s\"."
+msgstr "El adjunto \"%(document)s\" debe tener una de las categorías de \"%(categories)s\"."
+
+msgctxt "model:ir.message,text:msg_repeated_unique"
+msgid "Attachment \"%(document)s\" has more than one child category of \"%(category)s\"."
+msgstr "El adjunto \"%(document)s\" tiene más de una categoría hija de \"%(category)s\"."
+
+msgctxt "model:ir.message,text:msg_category_name_unique"
+msgid "Category name must be unique per parent."
+msgstr "El nombre de la categoría debe ser único por padre."
+
+msgctxt "model:ir.ui.menu,name:menu_office"
+msgid "Office"
+msgstr "Oficina"
+
+msgctxt "model:ir.ui.menu,name:menu_attachment"
+msgid "Documents & Attachments"
+msgstr "Documentos y adjuntos"
+
+msgctxt "model:ir.ui.menu,name:menu_category"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "model:ir.ui.menu,name:menu_category_tree"
+msgid "Category Tree"
+msgstr "Árbol de categorías"
+
+msgctxt "model:res.group,name:group_admin"
+msgid "Office Administrator"
+msgstr "Administrador de Oficina"
+
+msgctxt "view:ir.attachment:"
+msgid "Access"
+msgstr "Acceso"
+
+msgctxt "view:office.category:"
+msgid "Access"
+msgstr "Acceso"
+
+msgctxt "view:ir.attachment:"
+msgid "Technical"
+msgstr "Técnico"
+
+msgctxt "view:ir.attachment:"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "wizard_button:office.attachment.export,start,download:"
+msgid "Download"
+msgstr "Descargar"
+
+msgctxt "wizard_button:office.attachment.export,start,end:"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "field:office.configuration,default_filename:"
+msgid "Default Filename"
+msgstr "Nombre de archivo por defecto"
+
+msgctxt "field:office.document.template,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:office.document.template,mime_type:"
+msgid "MIME Type"
+msgstr "Tipo MIME"
+
+msgctxt "field:office.document.template,extension:"
+msgid "Extension"
+msgstr "Extensión"
+
+msgctxt "field:office.document.template,type:"
+msgid "Type"
+msgstr "Tipo"
+
+msgctxt "field:office.document.template,data:"
+msgid "File"
+msgstr "Archivo"
+
+msgctxt "field:office.document.template,url:"
+msgid "URL"
+msgstr "URL"
+
+msgctxt "field:office.document.template,content:"
+msgid "Content"
+msgstr "Contenido"
+
+msgctxt "field:office.document.create.start,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:office.document.create.start,filename:"
+msgid "Filename"
+msgstr "Nombre del archivo"
+
+msgctxt "field:office.document.create.start,categories:"
+msgid "Categories"
+msgstr "Categorías"
+
+msgctxt "field:office.document.create.start,unlinked:"
+msgid "Unlinked"
+msgstr "Desvinculado"
+
+msgctxt "field:office.document.create.start,resource:"
+msgid "Resource"
+msgstr "Recurso"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Link"
+msgstr "Enlace"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Data"
+msgstr "Datos"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Text"
+msgstr "Texto"
+
+msgctxt "model:office.configuration,name:"
+msgid "Office Configuration"
+msgstr "Configuración de Office"
+
+msgctxt "model:office.document.template,name:"
+msgid "Document Template"
+msgstr "Plantilla de documento"
+
+msgctxt "model:office.document.template,name:template_spreadsheet"
+msgid "Spreadsheet"
+msgstr "Hoja de cálculo"
+
+msgctxt "model:office.document.template,name:template_text_document"
+msgid "Text Document"
+msgstr "Documento de texto"
+
+msgctxt "model:office.document.template,name:template_presentation"
+msgid "Presentation"
+msgstr "Presentación"
+
+msgctxt "model:office.document.create.start,name:"
+msgid "Create Document from Template"
+msgstr "Crear un documento desde una plantilla"
+
+msgctxt "model:ir.action,name:action_configuration"
+msgid "Office Configuration"
+msgstr "Configuración de Office"
+
+msgctxt "model:ir.action,name:action_document_template"
+msgid "Document Templates"
+msgstr "Plantillas de documento"
+
+msgctxt "model:ir.action,name:wizard_document_create"
+msgid "Create"
+msgstr "Crear"
+
+msgctxt "model:ir.action,name:wizard_document_create_menu"
+msgid "New Document"
+msgstr "Nuevo documento"
+
+msgctxt "model:ir.action,name:action_attachment_created"
+msgid "Document or Attachment"
+msgstr "Documento o adjunto"
+
+msgctxt "model:ir.action.act_window.domain,name:action_attachment_domain_documents"
+msgid "Documents"
+msgstr "Documentos"
+
+msgctxt "model:ir.action.act_window.domain,name:action_attachment_domain_attachments"
+msgid "Attachments"
+msgstr "Adjuntos"
+
+msgctxt "model:ir.action.act_window.domain,name:action_attachment_domain_all"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration_form"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgctxt "model:ir.ui.menu,name:menu_document_template"
+msgid "Document Templates"
+msgstr "Plantillas de documento"
+
+msgctxt "model:ir.ui.menu,name:menu_document_create"
+msgid "New Document"
+msgstr "Nuevo documento"
+
+msgctxt "model:ir.model.button,string:attachment_create_from_template_button"
+msgid "New Document"
+msgstr "Nuevo documento"
+
+msgctxt "wizard_button:office.document.create,start,create_:"
+msgid "Create"
+msgstr "Crear"
+
+msgctxt "wizard_button:office.document.create,start,end:"
+msgid "Cancel"
+msgstr "Cancelar"

@@ -1,0 +1,45 @@
+<form col="6">
+    <label name="type"/>
+    <field name="type"/>
+    <label name="name"/>
+    <field name="name"/>
+    <group id="checkboxes" colspan="2" col="-1">
+        <label name="unlinked"/>
+        <field name="unlinked"/>
+        <label name="active"/>
+        <field name="active"/>
+    </group>
+    <label name="resource"/>
+    <field name="resource" colspan="5"/>
+    <label name="data"/>
+    <field name="data"/>
+    <label name="link"/>
+    <field name="link" widget="url"/>
+    <label name="language"/>
+    <field name="language"/>
+    <label name="replaced_by"/>
+    <field name="replaced_by"/>
+    <notebook colspan="6">
+        <page name="content" col="1">
+            <field name="content" height="500"/>
+        </page>
+        <page name="categories" col="1">
+            <field name="categories" height="500"/>
+        </page>
+        <page id="access" string="Access">
+            <field name="reader_groups" height="500" colspan="2"/>
+            <field name="writer_groups" height="500" colspan="2"/>
+        </page>
+        <page name="description" col="1">
+            <field name="description"/>
+        </page>
+        <page string="Technical" id="technical">
+            <label name="last_user"/>
+            <field name="last_user"/>
+            <label name="last_modification"/>
+            <field name="last_modification"/>
+            <label name="mimetype"/>
+            <field name="mimetype"/>
+        </page>
+    </notebook>
+</form>

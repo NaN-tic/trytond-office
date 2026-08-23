@@ -1,0 +1,136 @@
+<tryton>
+    <data noupdate="1">
+        <record model="office.configuration" id="configuration">
+            <field name="default_filename">unnamed document</field>
+        </record>
+    </data>
+
+    <data>
+        <record model="ir.ui.menu" id="menu_configuration">
+            <field name="name">Configuration</field>
+            <field name="parent" ref="menu_office"/>
+            <field name="icon">tryton-settings</field>
+            <field name="sequence" eval="0"/>
+        </record>
+        <record model="ir.ui.menu-res.group" id="menu_configuration_group">
+            <field name="menu" ref="menu_configuration"/>
+            <field name="group" ref="res.group_admin"/>
+        </record>
+
+        <record model="ir.ui.view" id="configuration_view_form">
+            <field name="model">office.configuration</field>
+            <field name="type">form</field>
+            <field name="name">configuration_form</field>
+        </record>
+        <record model="ir.action.act_window" id="action_configuration">
+            <field name="name">Office Configuration</field>
+            <field name="res_model">office.configuration</field>
+        </record>
+        <record model="ir.action.act_window.view" id="action_configuration_form">
+            <field name="act_window" ref="action_configuration"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="configuration_view_form"/>
+        </record>
+        <menuitem id="menu_configuration_form" parent="menu_configuration"
+            action="action_configuration" sequence="10" icon="tryton-list"
+            name="Configuration"/>
+
+        <record model="ir.ui.view" id="document_template_view_list">
+            <field name="model">office.document.template</field>
+            <field name="type">tree</field>
+            <field name="name">document_template_list</field>
+        </record>
+        <record model="ir.ui.view" id="document_template_view_form">
+            <field name="model">office.document.template</field>
+            <field name="type">form</field>
+            <field name="name">document_template_form</field>
+        </record>
+        <record model="ir.action.act_window" id="action_document_template">
+            <field name="name">Document Templates</field>
+            <field name="res_model">office.document.template</field>
+        </record>
+        <record model="ir.action.act_window.view" id="action_document_template_list">
+            <field name="act_window" ref="action_document_template"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="document_template_view_list"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_document_template_form">
+            <field name="act_window" ref="action_document_template"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="document_template_view_form"/>
+        </record>
+        <menuitem id="menu_document_template" parent="menu_configuration"
+            action="action_document_template" sequence="20"/>
+
+        <record model="ir.ui.view" id="document_create_start_view_form">
+            <field name="model">office.document.create.start</field>
+            <field name="type">form</field>
+            <field name="name">document_create_start_form</field>
+        </record>
+        <record model="ir.action.wizard" id="wizard_document_create">
+            <field name="name">Create</field>
+            <field name="wiz_name">office.document.create</field>
+            <field name="model">ir.attachment</field>
+        </record>
+        <record model="ir.action.wizard" id="wizard_document_create_menu">
+            <field name="name">New Document</field>
+            <field name="wiz_name">office.document.create</field>
+            <field name="model">ir.ui.menu</field>
+        </record>
+        <menuitem id="menu_document_create" parent="menu_office"
+            action="wizard_document_create_menu" sequence="5"
+            icon="tryton-create"/>
+
+        <record model="ir.action.act_window" id="action_attachment_created">
+            <field name="name">Document or Attachment</field>
+            <field name="res_model">ir.attachment</field>
+        </record>
+        <record model="ir.action.act_window.view" id="action_attachment_created_form">
+            <field name="act_window" ref="action_attachment_created"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="view_attachment_form"/>
+        </record>
+
+        <record model="ir.ui.view" id="attachment_view_tree_template">
+            <field name="model">ir.attachment</field>
+            <field name="inherit" ref="ir.attachment_view_tree"/>
+            <field name="name">attachment_list_template</field>
+        </record>
+        <record model="ir.model.button" id="attachment_create_from_template_button">
+            <field name="model">ir.attachment</field>
+            <field name="name">create_from_template</field>
+            <field name="string">New Document</field>
+        </record>
+
+        <record model="ir.model.access" id="access_office_configuration">
+            <field name="model">office.configuration</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_office_configuration_admin">
+            <field name="model">office.configuration</field>
+            <field name="group" ref="group_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_document_template">
+            <field name="model">office.document.template</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_document_template_admin">
+            <field name="model">office.document.template</field>
+            <field name="group" ref="group_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+    </data>
+</tryton>

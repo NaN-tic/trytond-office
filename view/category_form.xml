@@ -1,0 +1,27 @@
+<form col="6">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="parent"/>
+    <field name="parent"/>
+    <group id="checkboxes" col="-1" colspan="2">
+        <label name="view"/>
+        <field name="view"/>
+        <label name="required"/>
+        <field name="required"/>
+        <label name="unique"/>
+        <field name="unique"/>
+        <label name="active"/>
+        <field name="active"/>
+    </group>
+    <notebook colspan="6">
+        <page name="description">
+            <field name="description" colspan="4" height="400"/>
+        </page>
+        <page string="Access" id="access" col="2">
+            <field name="read_write_groups" height="300"/>
+            <field name="read_only_groups" height="300"/>
+            <field name="read_write_users" height="300"/>
+            <field name="read_only_users" height="300"/>
+        </page>
+    </notebook>
+</form>

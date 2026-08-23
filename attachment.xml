@@ -1,0 +1,227 @@
+<tryton>
+    <data>
+        <record model="office.unlinked" id="unlinked">
+            <field name="name">Unlinked Attachments</field>
+        </record>
+
+        <record model="res.group" id="group_office">
+            <field name="name">Office</field>
+        </record>
+        <record model="res.group" id="group_admin">
+            <field name="name">Office Administrator</field>
+            <field name="parent" ref="group_office"/>
+        </record>
+        <record model="res.user-res.group" id="user_admin_group_admin">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_admin"/>
+        </record>
+        <record model="ir.ui.icon" id="icon_office">
+            <field name="name">tryton-office</field>
+            <field name="path">icons/office.svg</field>
+        </record>
+
+        <menuitem name="Office" id="menu_office"
+            icon="tryton-office" sequence="1"/>
+        <record model="ir.ui.menu-res.group" id="menu_office_group">
+            <field name="menu" ref="menu_office"/>
+            <field name="group" ref="group_office"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_attachment_list">
+            <field name="model">ir.attachment</field>
+            <field name="type">tree</field>
+            <field name="name">attachment_list</field>
+        </record>
+        <record model="ir.ui.view" id="view_attachment_form">
+            <field name="model">ir.attachment</field>
+            <field name="type">form</field>
+            <field name="name">attachment_form</field>
+        </record>
+        <record model="ir.action.act_window" id="action_attachment">
+            <field name="name">Documents &amp; Attachments</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="context" eval="{'default_unlinked': True}" pyson="1"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_attachment_list">
+            <field name="act_window" ref="action_attachment"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="view_attachment_list"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_attachment_form">
+            <field name="act_window" ref="action_attachment"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="view_attachment_form"/>
+        </record>
+        <record model="ir.action.act_window.domain"
+            id="action_attachment_domain_documents">
+            <field name="name">Documents</field>
+            <field name="sequence">10</field>
+            <field name="domain">[["unlinked", "=", true]]</field>
+            <field name="act_window" ref="action_attachment"/>
+        </record>
+        <record model="ir.action.act_window.domain"
+            id="action_attachment_domain_attachments">
+            <field name="name">Attachments</field>
+            <field name="sequence">20</field>
+            <field name="domain">[["unlinked", "=", false]]</field>
+            <field name="act_window" ref="action_attachment"/>
+        </record>
+        <record model="ir.action.act_window.domain"
+            id="action_attachment_domain_all">
+            <field name="name">All</field>
+            <field name="sequence">30</field>
+            <field name="domain"></field>
+            <field name="act_window" ref="action_attachment"/>
+        </record>
+        <menuitem id="menu_attachment" parent="menu_office"
+            name="Documents &amp; Attachments" action="action_attachment"
+            sequence="10"/>
+
+        <record model="ir.action.report" id="report_attachment_pdf">
+            <field name="name">Download as PDF</field>
+            <field name="model">ir.attachment</field>
+            <field name="report_name">office.attachment.pdf</field>
+            <field name="extension">pdf</field>
+        </record>
+        <record model="ir.action.keyword" id="report_attachment_pdf_keyword">
+            <field name="keyword">form_print</field>
+            <field name="model">ir.attachment,-1</field>
+            <field name="action" ref="report_attachment_pdf"/>
+        </record>
+        <record model="ir.action.report" id="report_attachment_microsoft_office">
+            <field name="name">Download as Microsoft Office</field>
+            <field name="model">ir.attachment</field>
+            <field name="report_name">office.attachment.microsoft_office</field>
+            <field name="extension">docx</field>
+        </record>
+        <record model="ir.action.keyword" id="report_attachment_microsoft_office_keyword">
+            <field name="keyword">form_print</field>
+            <field name="model">ir.attachment,-1</field>
+            <field name="action" ref="report_attachment_microsoft_office"/>
+        </record>
+        <record model="ir.action.report" id="report_attachment_open_document">
+            <field name="name">Download as OpenDocument</field>
+            <field name="model">ir.attachment</field>
+            <field name="report_name">office.attachment.open_document</field>
+        </record>
+        <record model="ir.action.keyword" id="report_attachment_open_document_keyword">
+            <field name="keyword">form_print</field>
+            <field name="model">ir.attachment,-1</field>
+            <field name="action" ref="report_attachment_open_document"/>
+        </record>
+        <record model="ir.ui.view" id="attachment_export_start_view_form">
+            <field name="model">office.attachment.export.start</field>
+            <field name="type">form</field>
+            <field name="name">attachment_export_start_form</field>
+        </record>
+        <record model="ir.action.report" id="report_attachment_custom">
+            <field name="name">Download as...</field>
+            <field name="model">ir.attachment</field>
+            <field name="report_name">office.attachment.custom</field>
+            <field name="extension">pdf</field>
+        </record>
+        <record model="ir.action.wizard" id="wizard_attachment_export">
+            <field name="name">Download as...</field>
+            <field name="wiz_name">office.attachment.export</field>
+            <field name="model">ir.attachment</field>
+        </record>
+        <record model="ir.action.keyword" id="wizard_attachment_export_keyword">
+            <field name="keyword">form_print</field>
+            <field name="model">ir.attachment,-1</field>
+            <field name="action" ref="wizard_attachment_export"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_category_list">
+            <field name="model">office.category</field>
+            <field name="type">tree</field>
+            <field name="name">category_list</field>
+        </record>
+        <record model="ir.ui.view" id="view_category_tree">
+            <field name="model">office.category</field>
+            <field name="type">tree</field>
+            <field name="field_childs">children</field>
+            <field name="name">category_tree</field>
+        </record>
+        <record model="ir.ui.view" id="view_category_form">
+            <field name="model">office.category</field>
+            <field name="type">form</field>
+            <field name="name">category_form</field>
+        </record>
+        <record model="ir.action.act_window" id="action_office_category">
+            <field name="name">Categories</field>
+            <field name="res_model">office.category</field>
+        </record>
+        <record model="ir.action.act_window.view" id="action_office_category_list">
+            <field name="act_window" ref="action_office_category"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="view_category_list"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_office_category_form">
+            <field name="act_window" ref="action_office_category"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="view_category_form"/>
+        </record>
+        <record model="ir.action.act_window" id="action_office_category_tree">
+            <field name="name">Category Tree</field>
+            <field name="res_model">office.category</field>
+            <field name="domain" eval="[('parent', '=', None)]" pyson="1"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_office_category_tree_tree">
+            <field name="act_window" ref="action_office_category_tree"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="view_category_tree"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_office_category_tree_form">
+            <field name="act_window" ref="action_office_category_tree"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="view_category_form"/>
+        </record>
+        <menuitem id="menu_category_tree" parent="menu_office"
+            action="action_office_category_tree" sequence="20"/>
+        <menuitem id="menu_category" parent="menu_category_tree"
+            action="action_office_category" sequence="10"/>
+
+        <record model="ir.action.act_window" id="action_attachment_by_category">
+            <field name="name">Documents &amp; Attachments by Category</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="context" eval="{'categories': [Eval('active_id')]}" pyson="1"/>
+            <field name="domain" eval="[('categories', 'child_of', [Eval('active_id')], 'parent')]" pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="action_attachment_by_category_keyword">
+            <field name="keyword">tree_open</field>
+            <field name="model">office.category,-1</field>
+            <field name="action" ref="action_attachment_by_category"/>
+        </record>
+
+        <record model="ir.model.access" id="access_office_unlinked">
+            <field name="model">office.unlinked</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_office_category">
+            <field name="model">office.category</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_office_category_office">
+            <field name="model">office.category</field>
+            <field name="group" ref="group_office"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_office_category_admin">
+            <field name="model">office.category</field>
+            <field name="group" ref="group_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+    </data>
+</tryton>

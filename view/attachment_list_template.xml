@@ -1,0 +1,6 @@
+<data>
+    <xpath expr="/tree/field[@name='link']" position="after">
+        <field name="content" tree_invisible="1"/>
+        <button name="create_from_template"/>
+    </xpath>
+</data>

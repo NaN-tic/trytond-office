@@ -1,0 +1,55 @@
+<tryton>
+    <data grouped="1">
+        <record model="ir.message" id="msg_attachment_reader_group_uniq">
+            <field name="text">Attachment can only have the same Reader Group once.</field>
+        </record>
+        <record model="ir.message" id="msg_attachment_writer_group_uniq">
+            <field name="text">Attachment can only have the same Writer Group once.</field>
+        </record>
+        <record model="ir.message" id="msg_attachment_category_uniq">
+            <field name="text">Attachment can only have the same Category once.</field>
+        </record>
+        <record model="ir.message" id="msg_category_name_unique">
+            <field name="text">Category name must be unique per parent.</field>
+        </record>
+        <record model="ir.message" id="msg_category_group_unique">
+            <field name="text">A group can be linked to a category only once for this access level.</field>
+        </record>
+        <record model="ir.message" id="msg_category_user_unique">
+            <field name="text">A user can be linked to a category only once for this access level.</field>
+        </record>
+        <record model="ir.message" id="msg_missing_categories">
+            <field name="text">Attachment "%(document)s" must have one of the categories inside "%(categories)s".</field>
+        </record>
+        <record model="ir.message" id="msg_repeated_unique">
+            <field name="text">Attachment "%(document)s" has more than one child category of "%(category)s".</field>
+        </record>
+        <record model="ir.message" id="msg_invalid_attachment_link">
+            <field name="text">The attachment link must use HTTP or HTTPS.</field>
+        </record>
+        <record model="ir.message" id="msg_attachment_link_too_large">
+            <field name="text">The linked file is larger than 100 MB.</field>
+        </record>
+        <record model="ir.message" id="msg_attachment_link_download_failed">
+            <field name="text">The linked file could not be downloaded: %(error)s</field>
+        </record>
+        <record model="ir.message" id="msg_attachment_without_data">
+            <field name="text">Attachment "%(attachment)s" has no file to download.</field>
+        </record>
+        <record model="ir.message" id="msg_soffice_not_found">
+            <field name="text">LibreOffice (soffice) is not installed on the server.</field>
+        </record>
+        <record model="ir.message" id="msg_attachment_conversion_failed">
+            <field name="text">LibreOffice could not convert the attachment: %(error)s</field>
+        </record>
+        <record model="ir.message" id="msg_no_attachments_selected">
+            <field name="text">Select at least one attachment.</field>
+        </record>
+        <record model="ir.message" id="msg_invalid_output_format">
+            <field name="text">The selected output format is not valid.</field>
+        </record>
+        <record model="ir.message" id="msg_unnamed_document">
+            <field name="text">unnamed document</field>
+        </record>
+    </data>
+</tryton>

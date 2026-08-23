@@ -1,0 +1,18 @@
+<form>
+    <label name="name"/>
+    <field name="name"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="type"/>
+    <field name="type"/>
+    <label name="extension"/>
+    <field name="extension"/>
+    <label name="mime_type"/>
+    <field name="mime_type"/>
+    <label name="data"/>
+    <field name="data"/>
+    <label name="url"/>
+    <field name="url" widget="url"/>
+    <label name="content"/>
+    <field name="content"/>
+</form>
