@@ -5,8 +5,9 @@ import tempfile
 from magic import Magic
 from markitdown import (
     FileConversionException, MarkItDown, UnsupportedFormatException)
-from sql import Table
+from sql import Literal, Null, Table
 from sql.conditionals import Coalesce
+from sql.functions import CurrentTimestamp
 from sql.operators import Equal
 
 from trytond import backend
@@ -22,8 +23,7 @@ from trytond.transaction import Transaction, without_check_access
 logger = logging.getLogger(__name__)
 
 
-def migrate_category_relation(model, module_name, old_tables,
-        old_constraint):
+def migrate_category_relation(model, module_name, old_tables, old_constraint):
     for old_table in old_tables:
         if (backend.TableHandler.table_exist(old_table)
                 and not backend.TableHandler.table_exist(model._table)):
@@ -112,7 +112,7 @@ class Category(DeactivableMixin, tree(separator=' / '), ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
-        for old_table in ['office_tag']:
+        for old_table in ['brainbow_category', 'brainbow_tag', 'office_tag']:
             if (backend.TableHandler.table_exist(old_table)
                     and not backend.TableHandler.table_exist(cls._table)):
                 backend.TableHandler.table_rename(old_table, cls._table)
@@ -147,6 +147,10 @@ class Unlinked(ModelSingleton, ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
+        old_table = 'brainbow_unlinked'
+        if (backend.TableHandler.table_exist(old_table)
+                and not backend.TableHandler.table_exist(cls._table)):
+            backend.TableHandler.table_rename(old_table, cls._table)
         super().__register__(module_name)
 
 
@@ -230,6 +234,125 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
     @classmethod
     def __register__(cls, module_name):
         super().__register__(module_name)
+        if not backend.TableHandler.table_exist('brainbow_document'):
+            return
+
+        class LegacyDocument:
+            _table = 'brainbow_document'
+
+        LegacyDocument.__name__ = 'brainbow.document.legacy'
+        handler = backend.TableHandler(LegacyDocument)
+        if not handler.column_exist('attachment'):
+            handler.add_column('attachment', 'INTEGER')
+
+        cursor = Transaction().connection.cursor()
+        document = Table('brainbow_document')
+        replaced_by = (document.replaced_by
+            if handler.column_exist('replaced_by') else Literal(None))
+        cursor.execute(*document.select(
+                document.id, document.name, document.text,
+                document.language, document.resource, document.active,
+                replaced_by,
+                where=document.attachment == Null))
+        rows = cursor.fetchall()
+        if rows:
+            dummy = str(cls._get_unlinked_resource())
+            transaction = Transaction()
+            attachment_table = cls.__table__()
+            mapping = {}
+            with Transaction().set_context(
+                    office_migration=True, office_skip_index=True,
+                    file_sync_skip=True, _check_access=False):
+                for (document_id, name, content, language, resource, active,
+                        replaced_by) in rows:
+                    columns = [
+                        attachment_table.create_uid,
+                        attachment_table.create_date,
+                        attachment_table.name,
+                        attachment_table.type,
+                        attachment_table.content,
+                        attachment_table.language,
+                        attachment_table.resource,
+                        attachment_table.unlinked,
+                        attachment_table.active,
+                        ]
+                    values = [
+                        transaction.user, CurrentTimestamp(), name, 'text',
+                        content, language, resource or dummy,
+                        not bool(resource), active,
+                        ]
+                    attachment_id = transaction.database.nextid(
+                        transaction.connection, cls._table)
+                    if attachment_id:
+                        columns.append(attachment_table.id)
+                        values.append(attachment_id)
+                    cursor.execute(*attachment_table.insert(
+                            columns, [values],
+                            returning=([attachment_table.id]
+                                if (not attachment_id
+                                    and transaction.database.has_returning())
+                                else None)))
+                    if not attachment_id:
+                        if transaction.database.has_returning():
+                            attachment_id, = cursor.fetchone()
+                        else:
+                            attachment_id = transaction.database.lastid(cursor)
+                    attachment = cls(attachment_id)
+                    mapping[document_id] = (attachment, replaced_by)
+                    cursor.execute(*document.update(
+                            [document.attachment], [attachment.id],
+                            where=document.id == document_id))
+                if handler.column_exist('replaced_by'):
+                    replacement = Table('brainbow_document')
+                    cursor.execute(*document.join(replacement,
+                            condition=(document.replaced_by
+                                == replacement.id)).select(
+                                    document.attachment,
+                                    replacement.attachment,
+                                    where=((document.attachment != Null)
+                                        & (replacement.attachment != Null))))
+                    for attachment_id, replacement_id in cursor.fetchall():
+                        cursor.execute(*attachment_table.update(
+                                [attachment_table.replaced_by],
+                                [replacement_id],
+                                where=attachment_table.id == attachment_id))
+            cls._migrate_document_references(mapping)
+        cls._migrate_file_sync_unlinked()
+
+    @classmethod
+    def _migrate_document_references(cls, mapping):
+        cursor = Transaction().connection.cursor()
+        if backend.TableHandler.table_exist('kb_index'):
+            index = Table('kb_index')
+            for document_id, (attachment, _) in mapping.items():
+                cursor.execute(*index.update(
+                        [index.resource], [str(attachment)],
+                        where=(index.resource
+                            == f'brainbow.document,{document_id}')))
+        if backend.TableHandler.table_exist('file_sync_entry'):
+            entry = Table('file_sync_entry')
+
+            class LegacyEntry:
+                _table = 'file_sync_entry'
+
+            LegacyEntry.__name__ = 'file.sync.entry.legacy'
+            handler = backend.TableHandler(LegacyEntry)
+            if handler.column_exist('document'):
+                for document_id, (attachment, _) in mapping.items():
+                    cursor.execute(*entry.update(
+                            [entry.attachment], [attachment.id],
+                            where=((entry.document == document_id)
+                                & (entry.attachment == Null))))
+
+    @classmethod
+    def _migrate_file_sync_unlinked(cls):
+        cursor = Transaction().connection.cursor()
+        attachment = cls.__table__()
+        dummy = str(cls._get_unlinked_resource())
+        cursor.execute(*attachment.update(
+                [attachment.unlinked, attachment.resource],
+                [True, dummy],
+                where=attachment.resource.like('office.category,%')))
 
     @staticmethod
     def default_unlinked():
@@ -520,7 +643,34 @@ class AttachmentReaderGroup(ModelSQL):
 
     @classmethod
     def __register__(cls, module_name):
+        old_table = 'brainbow_attachment-reader-group'
+        if (backend.TableHandler.table_exist(old_table)
+                and not backend.TableHandler.table_exist(cls._table)):
+            backend.TableHandler.table_rename(old_table, cls._table)
         super().__register__(module_name)
+        cls._migrate_documents()
+
+    @classmethod
+    def _migrate_documents(cls):
+        table_name = 'brainbow_document-reader-group'
+        if not backend.TableHandler.table_exist(table_name):
+            return
+        cursor = Transaction().connection.cursor()
+        document = Table('brainbow_document')
+        relation = Table(table_name)
+        cursor.execute(*relation.join(document,
+                condition=document.id == relation.document).select(
+                    document.attachment, relation.reader_group,
+                    where=document.attachment != Null))
+        for attachment, group in cursor.fetchall():
+            if not cls.search([
+                        ('attachment', '=', attachment),
+                        ('reader_group', '=', group),
+                        ], limit=1):
+                cls.create([{
+                            'attachment': attachment,
+                            'reader_group': group,
+                            }])
 
 
 class AttachmentWriterGroup(ModelSQL):
@@ -544,7 +694,30 @@ class AttachmentWriterGroup(ModelSQL):
 
     @classmethod
     def __register__(cls, module_name):
+        old_table = 'brainbow_attachment-writer-group'
+        if (backend.TableHandler.table_exist(old_table)
+                and not backend.TableHandler.table_exist(cls._table)):
+            backend.TableHandler.table_rename(old_table, cls._table)
         super().__register__(module_name)
+        table_name = 'brainbow_document-writer-group'
+        if not backend.TableHandler.table_exist(table_name):
+            return
+        cursor = Transaction().connection.cursor()
+        document = Table('brainbow_document')
+        relation = Table(table_name)
+        cursor.execute(*relation.join(document,
+                condition=document.id == relation.document).select(
+                    document.attachment, relation.writer_group,
+                    where=document.attachment != Null))
+        for attachment, group in cursor.fetchall():
+            if not cls.search([
+                        ('attachment', '=', attachment),
+                        ('writer_group', '=', group),
+                        ], limit=1):
+                cls.create([{
+                            'attachment': attachment,
+                            'writer_group': group,
+                            }])
 
 
 class AttachmentCategory(ModelSQL):
@@ -569,6 +742,8 @@ class AttachmentCategory(ModelSQL):
     @classmethod
     def __register__(cls, module_name):
         for old_table in [
+                'brainbow_attachment-category',
+                'brainbow_attachment-tag',
                 'office_attachment-tag',
                 ]:
             if (backend.TableHandler.table_exist(old_table)
@@ -580,10 +755,19 @@ class AttachmentCategory(ModelSQL):
             handler.column_rename('tag', 'category')
         handler.drop_constraint('attachment_tag_uniq')
         super().__register__(module_name)
+        cursor = Transaction().connection.cursor()
         relations = []
+        table_name = 'brainbow_document-tag'
+        if backend.TableHandler.table_exist(table_name):
+            document = Table('brainbow_document')
+            relation = Table(table_name)
+            cursor.execute(*relation.join(document,
+                    condition=document.id == relation.document).select(
+                        document.attachment, relation.tag,
+                        where=document.attachment != Null))
+            relations.extend(cursor.fetchall())
         if backend.TableHandler.table_exist(
                 'file_sync_tag_ir_attachment'):
-            cursor = Transaction().connection.cursor()
             relation = Table('file_sync_tag_ir_attachment')
             cursor.execute(*relation.select(
                     relation.attachment, relation.tag))
