@@ -7,7 +7,6 @@ from . import export
 
 def register():
     Pool.register(
-        attachment.Module,
         attachment.Index,
         attachment.Category,
         attachment.Unlinked,

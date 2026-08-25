@@ -44,11 +44,15 @@ class TestDocumentMigration(unittest.TestCase):
                 'language INTEGER, resource VARCHAR, active BOOLEAN, '
                 'replaced_by INTEGER)')
             cursor.execute(
-                'CREATE TABLE brainbow_document_reader_group ('
+                'CREATE TABLE "brainbow_document-reader-group" ('
                 'id INTEGER PRIMARY KEY, document INTEGER, '
                 'reader_group INTEGER)')
             cursor.execute(
-                'CREATE TABLE brainbow_document_tag ('
+                'CREATE TABLE "brainbow_document-writer-group" ('
+                'id INTEGER PRIMARY KEY, document INTEGER, '
+                'writer_group INTEGER)')
+            cursor.execute(
+                'CREATE TABLE "brainbow_document-tag" ('
                 'id INTEGER PRIMARY KEY, document INTEGER, tag INTEGER)')
             cursor.execute(
                 'INSERT INTO brainbow_document '
@@ -63,11 +67,15 @@ class TestDocumentMigration(unittest.TestCase):
                 (2, 'Current Guide', 'Current text', language.id,
                     None, True, None))
             cursor.execute(
-                'INSERT INTO brainbow_document_reader_group '
+                'INSERT INTO "brainbow_document-reader-group" '
                 '(id, document, reader_group) VALUES (?, ?, ?)',
                 (1, 1, group.id))
             cursor.execute(
-                'INSERT INTO brainbow_document_tag '
+                'INSERT INTO "brainbow_document-writer-group" '
+                '(id, document, writer_group) VALUES (?, ?, ?)',
+                (1, 1, group.id))
+            cursor.execute(
+                'INSERT INTO "brainbow_document-tag" '
                 '(id, document, tag) VALUES (?, ?, ?)',
                 (1, 1, category.id))
 
@@ -75,6 +83,7 @@ class TestDocumentMigration(unittest.TestCase):
             Attachment = pool.get('ir.attachment')
             Unlinked = pool.get('office.unlinked')
             ReaderGroup = pool.get('office.attachment-reader-group')
+            WriterGroup = pool.get('office.attachment-writer-group')
             AttachmentCategory = pool.get('office.attachment-category')
             unlinked = Unlinked.get_singleton()
             self.assertIsNotNone(unlinked)
@@ -86,6 +95,7 @@ class TestDocumentMigration(unittest.TestCase):
             transaction._locked_tables.add(Unlinked._table)
             Attachment.__register__('office')
             ReaderGroup.__register__('office')
+            WriterGroup.__register__('office')
             AttachmentCategory.__register__('office')
 
             attachment, = Attachment.search([
@@ -101,6 +111,8 @@ class TestDocumentMigration(unittest.TestCase):
             self.assertIsNotNone(Unlinked.get_singleton())
             self.assertEqual(
                 [item.id for item in attachment.reader_groups], [group.id])
+            self.assertEqual(
+                [item.id for item in attachment.writer_groups], [group.id])
             self.assertEqual(
                 [item.id for item in attachment.categories], [category.id])
             migrated_file_sync_attachment = Attachment(

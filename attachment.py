@@ -23,74 +23,7 @@ from trytond.transaction import Transaction, without_check_access
 logger = logging.getLogger(__name__)
 
 
-def migrate_model_name(old_name, new_name):
-    cursor = Transaction().connection.cursor()
-    columns = {
-        'ir_model': ['name'],
-        'ir_model_field': ['model', 'relation'],
-        'ir_model_access': ['model'],
-        'ir_model_field_access': ['model'],
-        'ir_model_button': ['model'],
-        'ir_model_data': ['model'],
-        'ir_rule_group': ['model'],
-        'ir_ui_view': ['model'],
-        'ir_ui_view_tree_width': ['model'],
-        'ir_ui_view_tree_optional': ['model'],
-        'ir_ui_view_tree_state': ['model'],
-        'ir_ui_view_search': ['model'],
-        'ir_action_report': ['model'],
-        'ir_action_act_window': ['res_model', 'context_model'],
-        'ir_action_wizard': ['model'],
-        'ir_filestore_queue': ['model'],
-        'ir_export': ['resource'],
-        'res_notification': ['model'],
-        }
-    for table_name, column_names in columns.items():
-        if not backend.TableHandler.table_exist(table_name):
-            continue
-        table = Table(table_name)
-        for column_name in column_names:
-            column = getattr(table, column_name)
-            if table_name == 'ir_model' and column_name == 'name':
-                cursor.execute(*table.select(
-                        table.id, where=column == new_name, limit=1))
-                if cursor.fetchone():
-                    continue
-            cursor.execute(*table.update(
-                    [column], [new_name], where=column == old_name))
-
-    for table_name, column_name in [
-            ('ir_attachment', 'resource'),
-            ('kb_index', 'resource'),
-            ('ir_action_keyword', 'model'),
-            ]:
-        if not backend.TableHandler.table_exist(table_name):
-            continue
-        table = Table(table_name)
-        column = getattr(table, column_name)
-        cursor.execute(*table.select(
-                table.id, column, where=column.like(old_name + ',%')))
-        for record_id, value in cursor.fetchall():
-            cursor.execute(*table.update(
-                    [column], [new_name + value[len(old_name):]],
-                    where=table.id == record_id))
-
-    if backend.TableHandler.table_exist('ir_translation'):
-        translation = Table('ir_translation')
-        cursor.execute(*translation.select(
-                translation.id, translation.name,
-                where=translation.name.like(old_name + ',%')))
-        for translation_id, name in cursor.fetchall():
-            cursor.execute(*translation.update(
-                    [translation.name],
-                    [new_name + name[len(old_name):]],
-                    where=translation.id == translation_id))
-
-
-def migrate_category_relation(model, module_name, old_tables, old_names,
-        old_constraint):
-    for old_name in old_names:
-        migrate_model_name(old_name, model.__name__)
+def migrate_category_relation(model, module_name, old_tables, old_constraint):
     for old_table in old_tables:
         if (backend.TableHandler.table_exist(old_table)
                 and not backend.TableHandler.table_exist(model._table)):
@@ -99,50 +32,6 @@ def migrate_category_relation(model, module_name, old_tables, old_names,
     if handler.column_exist('tag') and not handler.column_exist('category'):
         handler.column_rename('tag', 'category')
     handler.drop_constraint(old_constraint)
-
-
-def migrate_module_name():
-    cursor = Transaction().connection.cursor()
-    old_name = 'brainbow'
-    new_name = 'office'
-    module = Table('ir_module')
-    cursor.execute(*module.select(
-            module.id, where=module.name == new_name, limit=1))
-    new_module = cursor.fetchone()
-    cursor.execute(*module.select(
-            module.id, where=module.name == old_name, limit=1))
-    old_module = cursor.fetchone()
-    if old_module:
-        if new_module:
-            cursor.execute(*module.update(
-                    [module.state], ['not activated'],
-                    where=module.id == old_module[0]))
-        else:
-            cursor.execute(*module.update(
-                    [module.name], [new_name],
-                    where=module.id == old_module[0]))
-
-    for table_name in ['ir_model', 'ir_model_field', 'ir_model_data',
-            'ir_translation']:
-        if not backend.TableHandler.table_exist(table_name):
-            continue
-        table = Table(table_name)
-        cursor.execute(*table.update(
-                [table.module], [new_name],
-                where=table.module == old_name))
-
-    if backend.TableHandler.table_exist('ir_model_data'):
-        model_data = Table('ir_model_data')
-        cursor.execute(*model_data.select(
-                model_data.id, model_data.fs_id,
-                where=model_data.module == new_name))
-        for data_id, fs_id in cursor.fetchall():
-            new_fs_id = fs_id.replace('brainbow', 'office')
-            new_fs_id = new_fs_id.replace('tag', 'category')
-            if new_fs_id != fs_id:
-                cursor.execute(*model_data.update(
-                        [model_data.fs_id], [new_fs_id],
-                        where=model_data.id == data_id))
 
 
 def split_markdown_paragraphs(text):
@@ -168,20 +57,6 @@ def split_markdown_paragraphs(text):
     if current_paragraph:
         paragraphs.append(current_paragraph.strip())
     return paragraphs
-
-
-class Module(metaclass=PoolMeta):
-    __name__ = 'ir.module'
-
-    @classmethod
-    def update_list(cls):
-        super().update_list()
-        legacy_modules = cls.search([
-                ('name', '=', 'brainbow'),
-                ('state', '!=', 'not activated'),
-                ])
-        if legacy_modules:
-            cls.write(legacy_modules, {'state': 'not activated'})
 
 
 class Index(metaclass=PoolMeta):
@@ -237,9 +112,6 @@ class Category(DeactivableMixin, tree(separator=' / '), ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
-        migrate_module_name()
-        migrate_model_name('brainbow.tag', cls.__name__)
-        migrate_model_name('brainbow.category', cls.__name__)
         for old_table in ['brainbow_category', 'brainbow_tag', 'office_tag']:
             if (backend.TableHandler.table_exist(old_table)
                     and not backend.TableHandler.table_exist(cls._table)):
@@ -275,7 +147,6 @@ class Unlinked(ModelSingleton, ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
-        migrate_model_name('brainbow.unlinked', cls.__name__)
         old_table = 'brainbow_unlinked'
         if (backend.TableHandler.table_exist(old_table)
                 and not backend.TableHandler.table_exist(cls._table)):
@@ -772,8 +643,6 @@ class AttachmentReaderGroup(ModelSQL):
 
     @classmethod
     def __register__(cls, module_name):
-        migrate_model_name(
-            'brainbow.attachment-reader-group', cls.__name__)
         old_table = 'brainbow_attachment-reader-group'
         if (backend.TableHandler.table_exist(old_table)
                 and not backend.TableHandler.table_exist(cls._table)):
@@ -783,12 +652,12 @@ class AttachmentReaderGroup(ModelSQL):
 
     @classmethod
     def _migrate_documents(cls):
-        if not backend.TableHandler.table_exist(
-                'brainbow_document_reader_group'):
+        table_name = 'brainbow_document-reader-group'
+        if not backend.TableHandler.table_exist(table_name):
             return
         cursor = Transaction().connection.cursor()
         document = Table('brainbow_document')
-        relation = Table('brainbow_document_reader_group')
+        relation = Table(table_name)
         cursor.execute(*relation.join(document,
                 condition=document.id == relation.document).select(
                     document.attachment, relation.reader_group,
@@ -825,19 +694,17 @@ class AttachmentWriterGroup(ModelSQL):
 
     @classmethod
     def __register__(cls, module_name):
-        migrate_model_name(
-            'brainbow.attachment-writer-group', cls.__name__)
         old_table = 'brainbow_attachment-writer-group'
         if (backend.TableHandler.table_exist(old_table)
                 and not backend.TableHandler.table_exist(cls._table)):
             backend.TableHandler.table_rename(old_table, cls._table)
         super().__register__(module_name)
-        if not backend.TableHandler.table_exist(
-                'brainbow_document_writer_group'):
+        table_name = 'brainbow_document-writer-group'
+        if not backend.TableHandler.table_exist(table_name):
             return
         cursor = Transaction().connection.cursor()
         document = Table('brainbow_document')
-        relation = Table('brainbow_document_writer_group')
+        relation = Table(table_name)
         cursor.execute(*relation.join(document,
                 condition=document.id == relation.document).select(
                     document.attachment, relation.writer_group,
@@ -874,8 +741,6 @@ class AttachmentCategory(ModelSQL):
 
     @classmethod
     def __register__(cls, module_name):
-        migrate_model_name('brainbow.attachment-tag', cls.__name__)
-        migrate_model_name('brainbow.attachment-category', cls.__name__)
         for old_table in [
                 'brainbow_attachment-category',
                 'brainbow_attachment-tag',
@@ -892,9 +757,10 @@ class AttachmentCategory(ModelSQL):
         super().__register__(module_name)
         cursor = Transaction().connection.cursor()
         relations = []
-        if backend.TableHandler.table_exist('brainbow_document_tag'):
+        table_name = 'brainbow_document-tag'
+        if backend.TableHandler.table_exist(table_name):
             document = Table('brainbow_document')
-            relation = Table('brainbow_document_tag')
+            relation = Table(table_name)
             cursor.execute(*relation.join(document,
                     condition=document.id == relation.document).select(
                         document.attachment, relation.tag,
@@ -942,8 +808,6 @@ class CategoryReadOnlyGroup(ModelSQL):
             cls, module_name,
             ['file_sync_category-read-only-group',
                 'file_sync_tag-read-only-group'],
-            ['file.sync.category-read-only-group',
-                'file.sync.tag-read-only-group'],
             'tag_group_unique')
         super().__register__(module_name)
 
@@ -973,8 +837,6 @@ class CategoryReadWriteGroup(ModelSQL):
             cls, module_name,
             ['file_sync_category-read-write-group',
                 'file_sync_tag-read-write-group'],
-            ['file.sync.category-read-write-group',
-                'file.sync.tag-read-write-group'],
             'tag_group_unique')
         super().__register__(module_name)
 
@@ -1004,8 +866,6 @@ class CategoryReadOnlyUser(ModelSQL):
             cls, module_name,
             ['file_sync_category-read-only-user',
                 'file_sync_tag-read-only-user'],
-            ['file.sync.category-read-only-user',
-                'file.sync.tag-read-only-user'],
             'tag_user_unique')
         super().__register__(module_name)
 
@@ -1035,7 +895,5 @@ class CategoryReadWriteUser(ModelSQL):
             cls, module_name,
             ['file_sync_category-read-write-user',
                 'file_sync_tag-read-write-user'],
-            ['file.sync.category-read-write-user',
-                'file.sync.tag-read-write-user'],
             'tag_user_unique')
         super().__register__(module_name)
