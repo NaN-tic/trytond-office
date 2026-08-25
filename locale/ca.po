@@ -53,11 +53,11 @@ msgctxt "selection:ir.attachment,type:"
 msgid "Text"
 msgstr "Text"
 
-msgctxt "field:nantic.ai.configuration,office_title_model:"
+msgctxt "field:ai.configuration,office_title_model:"
 msgid "Office Title Model"
 msgstr "Model de títols de Office"
 
-msgctxt "field:nantic.ai.configuration,office_language_model:"
+msgctxt "field:ai.configuration,office_language_model:"
 msgid "Office Language Model"
 msgstr "Model d'idioma de Office"
 

@@ -19,6 +19,7 @@ from trytond.model import (
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Bool, Eval
 from trytond.transaction import Transaction, without_check_access
+from trytond.modules.ai_model.completion import get_completion
 
 logger = logging.getLogger(__name__)
 
@@ -483,13 +484,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
     def _completion(self, instruction, model_field):
         if not self.content or not self.content.strip():
             return
-        try:
-            Configuration = Pool().get('nantic.ai.configuration')
-        except KeyError:
-            logger.error('nantic_connection is not available.')
-            return
-        from trytond.modules.nantic_connection.chat_tools import (
-            get_completion)
+        Configuration = Pool().get('ai.configuration')
         model = getattr(Configuration(1), model_field)
         if not model:
             logger.error('Office AI model "%s" is not configured.',
