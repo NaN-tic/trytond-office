@@ -1,5 +1,6 @@
 from trytond.pool import Pool
 
+from . import ai
 from . import attachment
 from . import document
 from . import export
@@ -7,6 +8,7 @@ from . import export
 
 def register():
     Pool.register(
+        ai.AIConfiguration,
         attachment.Index,
         attachment.Category,
         attachment.Unlinked,

@@ -1,0 +1,10 @@
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="view_ai_configuration_form">
+            <field name="model">ai.configuration</field>
+            <field name="inherit"
+                ref="ai_model.view_chat_instruction_form"/>
+            <field name="name">ai_configuration_form</field>
+        </record>
+    </data>
+</tryton>
