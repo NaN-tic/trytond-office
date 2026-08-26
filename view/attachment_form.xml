@@ -11,10 +11,12 @@
     </group>
     <label name="resource"/>
     <field name="resource" colspan="5"/>
-    <label name="data"/>
-    <field name="data"/>
-    <label name="link"/>
-    <field name="link" widget="url"/>
+    <group id="data_link" colspan="4" col="-1">
+        <label name="data"/>
+        <field name="data"/>
+        <label name="link"/>
+        <field name="link" widget="url"/>
+    </group>
     <label name="language"/>
     <field name="language"/>
     <label name="replaced_by"/>
