@@ -41,6 +41,7 @@
             <field name="name">Documents &amp; Attachments</field>
             <field name="res_model">ir.attachment</field>
             <field name="context" eval="{'default_unlinked': True}" pyson="1"/>
+            <field name="order" eval="[('name', 'ASC')]" pyson="1"/>
         </record>
         <record model="ir.action.act_window.view" id="action_attachment_list">
             <field name="act_window" ref="action_attachment"/>
