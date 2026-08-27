@@ -257,6 +257,10 @@ msgctxt "field:office.configuration,default_filename:"
 msgid "Default Filename"
 msgstr "Nom de fitxer per defecte"
 
+msgctxt "field:office.configuration,image_ocr_model:"
+msgid "Image OCR Model"
+msgstr "Model OCR d'imatges"
+
 msgctxt "field:office.document.template,name:"
 msgid "Name"
 msgstr "Nom"

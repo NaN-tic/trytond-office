@@ -1,3 +1,5 @@
+import base64
+import json
 import logging
 import mimetypes
 import tempfile
@@ -464,22 +466,79 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                 extension = mimetypes.guess_extension(attachment.mimetype)
             if not extension:
                 continue
+            extracted_content = None
             try:
                 with tempfile.NamedTemporaryFile(
                         mode='wb', suffix=extension.lower()) as temp_file:
                     temp_file.write(attachment.data)
                     temp_file.flush()
                     result = converter.convert(temp_file.name)
-                    attachment.content = result.text_content.replace(
+                    extracted_content = result.text_content.replace(
                         '\x00', '')
-                attachment.set_language()
             except (FileConversionException,
                     UnsupportedFormatException) as exception:
                 logger.warning(
                     'Could not extract content using MarkItDown: %s',
                     exception)
-                attachment.content = None
+            attachment.content = extracted_content
+            if not (attachment.content or '').strip():
+                image_data = attachment._image_ocr()
+                if image_data is not None:
+                    attachment.content = image_data['literal_text']
+                    attachment.description = image_data['description']
+            attachment.set_language()
         cls.save(attachments)
+
+    def _image_ocr(self):
+        if not (self.mimetype or '').startswith('image/'):
+            return
+        Configuration = Pool().get('office.configuration')
+        model = Configuration(1).image_ocr_model
+        if not model:
+            return
+        language = Pool().get('ir.configuration').get_language()
+        encoded = base64.b64encode(self.data).decode('ascii')
+        response, error = get_completion([{
+                    'role': 'developer',
+                    'content': (
+                        'Analyze this image and return only valid JSON, without '
+                        'wrapping it in Markdown or a code fence, using exactly '
+                        'this structure: '
+                        '{"literal_text": "", "description": ""}. '
+                        'In literal_text, transcribe all visible text exactly '
+                        'as written and preserve its reading order. You may use '
+                        'Markdown syntax inside literal_text to reproduce the '
+                        'document structure, including headings, lists, tables '
+                        'and emphasis. In '
+                        'description, describe the visual content and context '
+                        'of the image using the database default language '
+                        f'({language}). Use an empty string when a value is '
+                        'not available and do not invent content.'),
+                    }, {
+                    'role': 'user',
+                    'content': [{
+                            'type': 'image_url',
+                            'image_url': {
+                                'url': (
+                                    f'data:{self.mimetype};base64,{encoded}'),
+                                },
+                            }],
+                    }], model=model)
+        if error:
+            logger.error('Could not extract image text using AI: %s', response)
+            return
+        content = response.choices[0].message.content
+        try:
+            image_data = json.loads(content)
+        except (json.JSONDecodeError, TypeError):
+            logger.error('Image AI returned invalid JSON: %s', content)
+            return
+        if (not isinstance(image_data, dict)
+                or not all(isinstance(image_data.get(key), str)
+                    for key in ['literal_text', 'description'])):
+            logger.error('Image AI returned an invalid structure: %s', content)
+            return
+        return image_data
 
     def _completion(self, instruction, model_field):
         if not self.content or not self.content.strip():

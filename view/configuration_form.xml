@@ -1,4 +1,6 @@
 <form>
     <label name="default_filename"/>
     <field name="default_filename"/>
+    <label name="image_ocr_model"/>
+    <field name="image_ocr_model"/>
 </form>
