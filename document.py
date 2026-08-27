@@ -14,6 +14,9 @@ class Configuration(ModelSingleton, ModelSQL, ModelView):
     __name__ = 'office.configuration'
 
     default_filename = fields.Char('Default Filename', required=True)
+    image_ocr_model = fields.Many2One(
+        'ai.model', 'Image OCR Model', domain=[('type', '=', 'llm')],
+        ondelete='RESTRICT')
 
     @staticmethod
     def default_default_filename():
