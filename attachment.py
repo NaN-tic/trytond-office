@@ -616,9 +616,21 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                 indexes = [Index(
                         text=paragraph,
                         language_code=language,
-                        resource=attachment)
+                        resource=attachment,
+                        weight='B')
                     for paragraph in split_markdown_paragraphs(
                         attachment.content)]
+                indexes.append(Index(
+                        text=attachment.name,
+                        language_code=language,
+                        resource=attachment,
+                        weight='A'))
+                if attachment.description:
+                    indexes.append(Index(
+                            text=attachment.description,
+                            language_code=language,
+                            resource=attachment,
+                            weight='C'))
             all_indexes[attachment] = indexes
         Index.compute_indexes(all_indexes)
 
