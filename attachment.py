@@ -21,7 +21,6 @@ from trytond.model import (
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Bool, Eval
 from trytond.transaction import Transaction, without_check_access
-from trytond.modules.ai_model.completion import get_completion
 
 logger = logging.getLogger(__name__)
 
@@ -498,7 +497,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
             return
         language = Pool().get('ir.configuration').get_language()
         encoded = base64.b64encode(self.data).decode('ascii')
-        response, error = get_completion([{
+        response, error = model.get_completion([{
                     'role': 'developer',
                     'content': (
                         'Analyze this image and return only valid JSON, without '
@@ -523,7 +522,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                                     f'data:{self.mimetype};base64,{encoded}'),
                                 },
                             }],
-                    }], model=model)
+                }], self)
         if error:
             logger.error('Could not extract image text using AI: %s', response)
             return
@@ -552,13 +551,13 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
         if model.provider != 'openrouter':
             logger.error('Office AI models must use OpenRouter.')
             return
-        response, error = get_completion([{
+        response, error = model.get_completion([{
                     'role': 'developer',
                     'content': instruction,
                     }, {
                     'role': 'user',
                     'content': self.content,
-                    }], model=model)
+                    }], self)
         if error:
             logger.error('Could not analyze attachment: %s', response)
             return
