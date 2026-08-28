@@ -188,6 +188,18 @@
             <field name="context" eval="{'categories': [Eval('active_id')]}" pyson="1"/>
             <field name="domain" eval="[('categories', 'child_of', [Eval('active_id')], 'parent')]" pyson="1"/>
         </record>
+        <record model="ir.action.act_window.view"
+            id="action_attachment_by_category_list">
+            <field name="act_window" ref="action_attachment_by_category"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="view_attachment_list"/>
+        </record>
+        <record model="ir.action.act_window.view"
+            id="action_attachment_by_category_form">
+            <field name="act_window" ref="action_attachment_by_category"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="view_attachment_form"/>
+        </record>
         <record model="ir.action.keyword" id="action_attachment_by_category_keyword">
             <field name="keyword">tree_open</field>
             <field name="model">office.category,-1</field>
