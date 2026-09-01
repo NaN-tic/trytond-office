@@ -17,6 +17,9 @@
         <page name="description">
             <field name="description" colspan="4" height="400"/>
         </page>
+        <page string="Attachments" id="attachments">
+            <field name="attachments" colspan="4" height="400"/>
+        </page>
         <page string="Access" id="access" col="2">
             <field name="read_write_groups" height="300"/>
             <field name="read_only_groups" height="300"/>

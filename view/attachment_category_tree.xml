@@ -1,0 +1,4 @@
+<tree keyword_open="1">
+    <field name="rec_name" icon="icon" expand="2"/>
+    <field name="record" optional="0"/>
+</tree>

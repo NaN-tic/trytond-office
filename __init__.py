@@ -16,6 +16,7 @@ def register():
         attachment.AttachmentReaderGroup,
         attachment.AttachmentWriterGroup,
         attachment.AttachmentCategory,
+        attachment.AttachmentCategoryUnion,
         attachment.CategoryReadOnlyGroup,
         attachment.CategoryReadWriteGroup,
         attachment.CategoryReadOnlyUser,
@@ -32,6 +33,7 @@ def register():
         export.AttachmentCustom,
         module='office', type_='report')
     Pool.register(
+        attachment.AttachmentCategoryOpen,
         export.AttachmentExport,
         document.DocumentCreate,
         module='office', type_='wizard')
