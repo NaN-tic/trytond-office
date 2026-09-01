@@ -19,6 +19,42 @@
             <field name="name">tryton-office</field>
             <field name="path">icons/office.svg</field>
         </record>
+        <record model="ir.ui.icon" id="icon_attachment_pdf">
+            <field name="name">office-attachment-pdf</field>
+            <field name="path">icons/attachment-pdf.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_document">
+            <field name="name">office-attachment-document</field>
+            <field name="path">icons/attachment-document.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_presentation">
+            <field name="name">office-attachment-presentation</field>
+            <field name="path">icons/attachment-presentation.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_spreadsheet">
+            <field name="name">office-attachment-spreadsheet</field>
+            <field name="path">icons/attachment-spreadsheet.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_image">
+            <field name="name">office-attachment-image</field>
+            <field name="path">icons/attachment-image.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_text">
+            <field name="name">office-attachment-text</field>
+            <field name="path">icons/attachment-text.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_link">
+            <field name="name">office-attachment-link</field>
+            <field name="path">icons/attachment-link.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_file">
+            <field name="name">office-attachment-file</field>
+            <field name="path">icons/attachment-file.svg</field>
+        </record>
+        <record model="ir.ui.icon" id="icon_attachment_video">
+            <field name="name">office-attachment-video</field>
+            <field name="path">icons/attachment-video.svg</field>
+        </record>
 
         <menuitem name="Office" id="menu_office"
             icon="tryton-office" sequence="1"/>
@@ -182,28 +218,50 @@
         <menuitem id="menu_category" parent="menu_category_tree"
             action="action_office_category" sequence="10"/>
 
+        <record model="ir.ui.view" id="view_attachment_category_tree">
+            <field name="model">office.attachment.category</field>
+            <field name="type">tree</field>
+            <field name="field_childs">children</field>
+            <field name="name">attachment_category_tree</field>
+        </record>
         <record model="ir.action.act_window" id="action_attachment_by_category">
-            <field name="name">Documents &amp; Attachments by Category</field>
-            <field name="res_model">ir.attachment</field>
-            <field name="context" eval="{'categories': [Eval('active_id')]}" pyson="1"/>
-            <field name="domain" eval="[('categories', 'child_of', [Eval('active_id')], 'parent')]" pyson="1"/>
+            <field name="name">Documents by Category</field>
+            <field name="res_model">office.attachment.category</field>
+            <field name="context" eval="{}" pyson="1"/>
+            <field name="domain" eval="[('parent', '=', None)]" pyson="1"/>
+            <field name="order" eval="[('name', 'ASC')]" pyson="1"/>
         </record>
         <record model="ir.action.act_window.view"
             id="action_attachment_by_category_list">
             <field name="act_window" ref="action_attachment_by_category"/>
             <field name="sequence" eval="10"/>
-            <field name="view" ref="view_attachment_list"/>
+            <field name="view" ref="view_attachment_category_tree"/>
         </record>
-        <record model="ir.action.act_window.view"
-            id="action_attachment_by_category_form">
-            <field name="act_window" ref="action_attachment_by_category"/>
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="view_attachment_form"/>
+        <menuitem id="menu_attachment_by_category" parent="menu_office"
+            action="action_attachment_by_category" sequence="15"/>
+
+        <record model="ir.action.wizard"
+            id="wizard_attachment_category_open">
+            <field name="name">Open</field>
+            <field name="wiz_name">office.attachment.category.open</field>
+            <field name="model">office.attachment.category</field>
+        </record>
+        <record model="ir.action.keyword"
+            id="wizard_attachment_category_open_keyword">
+            <field name="keyword">tree_open</field>
+            <field name="model">office.attachment.category,-1</field>
+            <field name="action" ref="wizard_attachment_category_open"/>
+        </record>
+        <record model="ir.action.wizard"
+            id="wizard_attachment_category_open_from_category">
+            <field name="name">Open</field>
+            <field name="wiz_name">office.attachment.category.open</field>
+            <field name="model">office.category</field>
         </record>
         <record model="ir.action.keyword" id="action_attachment_by_category_keyword">
             <field name="keyword">tree_open</field>
             <field name="model">office.category,-1</field>
-            <field name="action" ref="action_attachment_by_category"/>
+            <field name="action" ref="wizard_attachment_category_open_from_category"/>
         </record>
 
         <record model="ir.model.access" id="access_office_unlinked">
@@ -216,6 +274,22 @@
         <record model="ir.model.access" id="access_office_category">
             <field name="model">office.category</field>
             <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_attachment_category_union">
+            <field name="model">office.attachment.category</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access"
+            id="access_attachment_category_union_office">
+            <field name="model">office.attachment.category</field>
+            <field name="group" ref="group_office"/>
+            <field name="perm_read" eval="True"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_delete" eval="False"/>

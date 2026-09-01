@@ -186,8 +186,8 @@ msgid "unnamed document"
 msgstr "document sense nom"
 
 msgctxt "model:ir.action,name:action_attachment_by_category"
-msgid "Documents & Attachments by Category"
-msgstr "Documents i adjunts per categoria"
+msgid "Documents by Category"
+msgstr "Documents per categoria"
 
 msgctxt "model:ir.action,name:action_office_category"
 msgid "Categories"

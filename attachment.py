@@ -3,6 +3,7 @@ import json
 import logging
 import mimetypes
 import tempfile
+from pathlib import PurePath
 
 from magic import Magic
 from markitdown import (
@@ -17,12 +18,35 @@ from trytond.exceptions import UserError
 from trytond.i18n import gettext
 from trytond.model import (
     DeactivableMixin, Exclude, fields, ModelSingleton, ModelSQL, ModelView,
-    Unique, tree)
+    UnionMixin, Unique, tree)
 from trytond.pool import Pool, PoolMeta
-from trytond.pyson import Bool, Eval
+from trytond.pyson import Bool, Eval, PYSONEncoder
 from trytond.transaction import Transaction, without_check_access
+from trytond.wizard import StateAction, Wizard
 
 logger = logging.getLogger(__name__)
+
+
+TEXT_DOCUMENT_EXTENSIONS = frozenset({
+        '.doc', '.docm', '.docx', '.fodt', '.html', '.odt', '.ott', '.rtf',
+        '.tex', '.txt',
+        })
+PRESENTATION_EXTENSIONS = frozenset({
+        '.fodp', '.odp', '.otp', '.pot', '.potm', '.potx', '.ppt', '.pptm',
+        '.pptx',
+        })
+SPREADSHEET_EXTENSIONS = frozenset({
+        '.csv', '.fods', '.ods', '.ots', '.xls', '.xlsb', '.xlsm', '.xlsx',
+        })
+IMAGE_EXTENSIONS = frozenset({
+        '.avif', '.bmp', '.gif', '.heic', '.jpeg', '.jpg', '.png', '.svg',
+        '.tif', '.tiff', '.webp',
+        })
+VIDEO_EXTENSIONS = frozenset({
+        '.avi', '.m4v', '.mkv', '.mov', '.mp4', '.mpeg', '.mpg', '.ogv',
+        '.webm',
+        })
+INDEX_TEXT_MAX_LENGTH = 100_000
 
 
 def migrate_category_relation(model, module_name, old_tables, old_constraint):
@@ -37,27 +61,38 @@ def migrate_category_relation(model, module_name, old_tables, old_constraint):
 
 
 def split_markdown_paragraphs(text):
+    def append_paragraph(paragraphs, paragraph):
+        paragraph = paragraph.strip()
+        while len(paragraph) > INDEX_TEXT_MAX_LENGTH:
+            end = paragraph.rfind(' ', 0, INDEX_TEXT_MAX_LENGTH + 1)
+            if end <= 0:
+                end = INDEX_TEXT_MAX_LENGTH
+            paragraphs.append(paragraph[:end].strip())
+            paragraph = paragraph[end:].strip()
+        if paragraph:
+            paragraphs.append(paragraph)
+
     paragraphs = []
     current_paragraph = ''
     for line in (text or '').split('\n'):
         line = line.strip()
         if not line and current_paragraph:
-            paragraphs.append(current_paragraph.strip())
+            append_paragraph(paragraphs, current_paragraph)
             current_paragraph = ''
         elif line.startswith(('- ', '* ', '+ ')) or (
                 len(line.split('.')) >= 2
                 and line.split('.')[0].isdigit()
                 and line.split('.')[1].startswith(' ')):
             if current_paragraph:
-                paragraphs.append(current_paragraph.strip())
+                append_paragraph(paragraphs, current_paragraph)
             item = line.lstrip('-*+0123456789. ').strip()
             if item:
-                paragraphs.append(item)
+                append_paragraph(paragraphs, item)
             current_paragraph = ''
         elif line:
             current_paragraph += line + ' '
     if current_paragraph:
-        paragraphs.append(current_paragraph.strip())
+        append_paragraph(paragraphs, current_paragraph)
     return paragraphs
 
 
@@ -161,9 +196,14 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
     __name__ = 'ir.attachment'
 
     mimetype = fields.Char('Mimetype', readonly=True)
+    icon = fields.Function(
+        fields.Char('Icon', depends=['type', 'mimetype', 'name']), 'get_icon')
     content = fields.Text('Content', states={
             'readonly': Eval('type') != 'text',
             }, depends=['type'])
+    content_search = fields.Function(
+        fields.Char('Content'), 'get_content_search',
+        searcher='search_content_search')
     data_updated = fields.Boolean('Data Updated', readonly=True)
     language = fields.Many2One('ir.lang', 'Language')
     unlinked = fields.Boolean('Unlinked')
@@ -376,16 +416,65 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
     def get_categories_char(self, name):
         return ', '.join(category.rec_name for category in self.categories)
 
+    def get_content_search(self, name):
+        return None
+
+    def get_icon(self, name):
+        if self.type == 'text':
+            return 'office-attachment-text'
+        if self.type == 'link':
+            return 'office-attachment-link'
+
+        mimetype = (self.mimetype or '').lower()
+        extension = PurePath(self.name or '').suffix.lower()
+        if mimetype == 'application/pdf' or extension == '.pdf':
+            return 'office-attachment-pdf'
+        if mimetype.startswith('image/') or extension in IMAGE_EXTENSIONS:
+            return 'office-attachment-image'
+        if mimetype.startswith('video/') or extension in VIDEO_EXTENSIONS:
+            return 'office-attachment-video'
+        if extension in PRESENTATION_EXTENSIONS:
+            return 'office-attachment-presentation'
+        if extension in SPREADSHEET_EXTENSIONS:
+            return 'office-attachment-spreadsheet'
+        if (extension in TEXT_DOCUMENT_EXTENSIONS
+                or mimetype.startswith('text/')):
+            return 'office-attachment-document'
+        return 'office-attachment-file'
+
     @classmethod
     def search_categories_char(cls, name, clause):
         return [('categories.name',) + tuple(clause[1:])]
 
     @classmethod
+    def search_content_search(cls, name, clause):
+        operator, operand = clause[1:3]
+        positive = operator in {'=', 'like', 'ilike'}
+        negative = operator in {'!=', 'not like', 'not ilike'}
+        if not (positive or negative) or not isinstance(operand, str):
+            return [('id', '=', None)]
+        content = operand.strip('%').strip()
+        if not content:
+            return [] if positive else [('id', '=', None)]
+        Index = Pool().get('kb.index')
+        ids = Index.search_resource_ids(
+            content, cls.__name__, weights=['B'])
+        return [('id', 'in' if positive else 'not in', ids)]
+
+    @classmethod
     def search_rec_name(cls, name, clause):
-        return ['OR',
-            ('name',) + tuple(clause[1:]),
-            ('content',) + tuple(clause[1:]),
-            ]
+        operator = clause[1]
+        if operator in {'=', 'like', 'ilike'}:
+            return ['OR',
+                ('name',) + tuple(clause[1:]),
+                ('content_search',) + tuple(clause[1:]),
+                ]
+        if operator in {'!=', 'not like', 'not ilike'}:
+            return ['AND',
+                ('name',) + tuple(clause[1:]),
+                ('content_search',) + tuple(clause[1:]),
+                ]
+        return [('name',) + tuple(clause[1:])]
 
     @classmethod
     def create(cls, vlist):
@@ -846,6 +935,99 @@ class AttachmentCategory(ModelSQL):
                         'attachment': attachment,
                         'category': category,
                         }])
+
+
+class AttachmentCategoryUnion(UnionMixin, ModelSQL, ModelView):
+    'Attachment and Category'
+    __name__ = 'office.attachment.category'
+
+    name = fields.Char('Name')
+    parent = fields.Many2One(
+        'office.attachment.category', 'Parent', readonly=True)
+    children = fields.One2Many(
+        'office.attachment.category', 'parent', 'Children', readonly=True)
+    record = fields.Function(fields.Reference('Record', selection=[
+                ('ir.attachment', 'Attachment'),
+                ('office.category', 'Category'),
+                ]), 'get_record')
+    icon = fields.Function(fields.Char('Icon'), 'get_icon')
+    active = fields.Boolean('Active')
+
+    @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        cls._order.insert(0, ('name', 'ASC'))
+
+    @staticmethod
+    def union_models():
+        return ['ir.attachment', 'office.category']
+
+    @classmethod
+    def union_columns(cls, model):
+        table, columns = super().union_columns(model)
+        if model == 'ir.attachment':
+            Relation = Pool().get('office.attachment-category')
+            relation = Relation.__table__()
+            table = table.join(relation,
+                condition=table.id == relation.attachment)
+            parent = cls._fields['parent']
+            for index, column in enumerate(columns):
+                if column.output_name == 'parent':
+                    columns[index] = parent.sql_cast(cls.union_shard(
+                            relation.category,
+                            'office.category')).as_('parent')
+                    break
+        return table, columns
+
+    def get_record(self, name):
+        return str(self.union_unshard(self.id))
+
+    def get_icon(self, name):
+        record = self.union_unshard(self.id)
+        if record.__name__ == 'office.category':
+            return 'tryton-folder'
+        return record.icon
+
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        return [('name',) + tuple(clause[1:])]
+
+
+class AttachmentCategoryOpen(Wizard):
+    'Open Attachment or Category'
+    __name__ = 'office.attachment.category.open'
+
+    _readonly = True
+    start = StateAction('office.action_attachment_by_category')
+
+    def do_start(self, action):
+        record = self.record
+        if record.__name__ == 'office.attachment.category':
+            record = record.union_unshard(record.id)
+        if record.__name__ == 'office.category':
+            Union = Pool().get('office.attachment.category')
+            union_id = Union.union_shard(record.id, record.__name__)
+            encoder = PYSONEncoder()
+            action['name'] = record.rec_name
+            action['pyson_domain'] = encoder.encode([
+                    ('parent', '=', union_id),
+                    ])
+            return action, {}
+
+        collabora_url = getattr(record, 'collabora_url', None)
+        if collabora_url:
+            return {
+                'name': record.rec_name,
+                'type': 'ir.action.url',
+                'url': collabora_url,
+                }, {}
+
+        pool = Pool()
+        ModelData = pool.get('ir.model.data')
+        Action = pool.get('ir.action')
+        action_id = Action.get_action_id(ModelData.get_id(
+                'office', 'action_attachment_created'))
+        return Action(action_id).get_action_value(), {'res_id': record.id}
 
 
 class CategoryReadOnlyGroup(ModelSQL):
