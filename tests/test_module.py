@@ -7,5 +7,6 @@ from trytond.tests.test_tryton import ModuleTestCase
 class OfficeTestCase(ModuleTestCase):
     'Test Office module'
     module = 'office'
+    extras = ['galatea']
 
 del ModuleTestCase
