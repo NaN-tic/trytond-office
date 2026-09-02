@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<tryton>
+    <data depends="galatea">
+        <record model="ir.ui.view" id="view_attachment_form_galatea">
+            <field name="model">ir.attachment</field>
+            <field name="inherit" ref="view_attachment_form"/>
+            <field name="name">attachment_form_galatea</field>
+        </record>
+        <record model="ir.ui.view" id="view_attachment_list_galatea">
+            <field name="model">ir.attachment</field>
+            <field name="inherit" ref="view_attachment_list"/>
+            <field name="name">attachment_list_galatea</field>
+        </record>
+    </data>
+</tryton>
