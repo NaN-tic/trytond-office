@@ -584,7 +584,8 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
         model = Configuration(1).image_ocr_model
         if not model:
             return
-        language = Pool().get('ir.configuration').get_language()
+        language = (self.language.code if self.language
+            else Pool().get('ir.configuration').get_language())
         encoded = base64.b64encode(self.data).decode('ascii')
         response, error = model.get_completion([{
                     'role': 'developer',
@@ -599,7 +600,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                         'document structure, including headings, lists, tables '
                         'and emphasis. In '
                         'description, describe the visual content and context '
-                        'of the image using the database default language '
+                        'of the image using this language '
                         f'({language}). Use an empty string when a value is '
                         'not available and do not invent content.'),
                     }, {
