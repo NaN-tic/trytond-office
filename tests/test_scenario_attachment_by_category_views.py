@@ -88,7 +88,9 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
                 self.assertEqual(icon_attachment.icon, icon)
 
         with config.set_context(default_unlinked=True):
-            attachment = Attachment(name='Guide.pdf', type='data')
+            attachment = Attachment(
+                name='Guide.pdf', type='data',
+                description='The auroraneedle is only in the description')
             attachment.categories.append(root)
             attachment.save()
         self.assertEqual(attachment.icon, 'office-attachment-pdf')
@@ -110,6 +112,7 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
                 context=config.context):
             ServerAttachment = config.pool.get('ir.attachment')
             ServerAttachment.indexate([
+                    ServerAttachment(attachment.id),
                     ServerAttachment(indexed_attachment.id),
                     ServerAttachment(named_attachment.id),
                     ])
@@ -120,6 +123,11 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
                         ('content_search', 'ilike', '%quasarneedle%'),
                         ])],
             [indexed_attachment.id])
+        self.assertEqual(
+            [record.id for record in Attachment.find([
+                        ('content_search', 'ilike', '%auroraneedle%'),
+                        ])],
+            [attachment.id])
         self.assertEqual(
             {record.id for record in Attachment.find([
                         ('rec_name', 'ilike', '%quasarneedle%'),

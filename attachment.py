@@ -458,7 +458,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
             return [] if positive else [('id', '=', None)]
         Index = Pool().get('kb.index')
         ids = Index.search_resource_ids(
-            content, cls.__name__, weights=['B'])
+            content, cls.__name__, weights=['B', 'C'])
         return [('id', 'in' if positive else 'not in', ids)]
 
     @classmethod
