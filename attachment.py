@@ -244,6 +244,14 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                     },
                 })
 
+    @classmethod
+    def view_attributes(cls):
+        return super().view_attributes() + [
+            ('//page[field[@name="data" and @widget="document"]]', 'states', {
+                    'invisible': Eval('type') != 'data',
+                    }),
+            ]
+
     @staticmethod
     def default_name():
         Configuration = Pool().get('office.configuration')

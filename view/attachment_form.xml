@@ -22,6 +22,9 @@
     <label name="replaced_by"/>
     <field name="replaced_by"/>
     <notebook colspan="6">
+        <page name="data" col="1">
+            <field name="data" widget="document" height="500"/>
+        </page>
         <page name="content" col="1">
             <field name="content" height="500"/>
         </page>
