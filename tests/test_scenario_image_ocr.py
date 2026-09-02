@@ -28,7 +28,9 @@ class TestImageOCR(unittest.TestCase):
             AIModel = pool.get('ai.model')
             Attachment = pool.get('ir.attachment')
             IRConfiguration = pool.get('ir.configuration')
+            Lang = pool.get('ir.lang')
             OfficeConfiguration = pool.get('office.configuration')
+            english, = Lang.search([('code', '=', 'en')])
             model, = AIModel.create([{
                         'name': 'Vision model',
                         'model_name': 'example/vision',
@@ -43,10 +45,11 @@ class TestImageOCR(unittest.TestCase):
                 'unlinked': True,
                 }
             with Transaction().set_context(office_migration=True):
-                unconfigured, configured, extracted, document = (
+                unconfigured, configured, localized, extracted, document = (
                     Attachment.create([
                             image_values,
                             image_values,
+                            image_values | {'language': english.id},
                             image_values,
                             {
                                 'name': 'empty.pdf',
@@ -93,6 +96,11 @@ class TestImageOCR(unittest.TestCase):
                 self.assertEqual(
                     messages[1]['content'][0]['type'], 'image_url')
                 self.assertEqual(completion.call_args.args[1], configured)
+
+                completion.reset_mock()
+                Attachment.extract_content([localized])
+                messages = completion.call_args.args[0]
+                self.assertIn('(en)', messages[0]['content'])
 
                 completion.reset_mock()
                 converter.convert.return_value.text_content = 'From MarkItDown'
