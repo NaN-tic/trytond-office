@@ -961,33 +961,41 @@ class AttachmentCategoryUnion(UnionMixin, ModelSQL, ModelView):
 
     @staticmethod
     def union_models():
-        return ['ir.attachment', 'office.category']
+        return ['office.attachment-category', 'office.category']
 
     @classmethod
     def union_columns(cls, model):
         table, columns = super().union_columns(model)
-        if model == 'ir.attachment':
-            Relation = Pool().get('office.attachment-category')
-            relation = Relation.__table__()
-            table = table.join(relation,
-                condition=table.id == relation.attachment)
-            parent = cls._fields['parent']
+        if model == 'office.attachment-category':
+            Attachment = Pool().get('ir.attachment')
+            attachment = Attachment.__table__()
+            relation = table
+            table = relation.join(attachment,
+                condition=relation.attachment == attachment.id)
+            values = {
+                'active': attachment.active,
+                'name': attachment.name,
+                'parent': cls.union_shard(
+                    relation.category, 'office.category'),
+                }
             for index, column in enumerate(columns):
-                if column.output_name == 'parent':
-                    columns[index] = parent.sql_cast(cls.union_shard(
-                            relation.category,
-                            'office.category')).as_('parent')
-                    break
+                name = column.output_name
+                if name in values:
+                    field = cls._fields[name]
+                    columns[index] = field.sql_cast(values[name]).as_(name)
         return table, columns
 
     def get_record(self, name):
-        return str(self.union_unshard(self.id))
+        record = self.union_unshard(self.id)
+        if record.__name__ == 'office.attachment-category':
+            record = record.attachment
+        return str(record)
 
     def get_icon(self, name):
         record = self.union_unshard(self.id)
         if record.__name__ == 'office.category':
             return 'tryton-folder'
-        return record.icon
+        return record.attachment.icon
 
     @classmethod
     def search_rec_name(cls, name, clause):
@@ -1005,6 +1013,8 @@ class AttachmentCategoryOpen(Wizard):
         record = self.record
         if record.__name__ == 'office.attachment.category':
             record = record.union_unshard(record.id)
+        if record.__name__ == 'office.attachment-category':
+            record = record.attachment
         if record.__name__ == 'office.category':
             Union = Pool().get('office.attachment.category')
             union_id = Union.union_shard(record.id, record.__name__)

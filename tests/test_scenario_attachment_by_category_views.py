@@ -66,6 +66,8 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
         root.save()
         child = Category(name='Accounting', parent=root)
         child.save()
+        second_root = Category(name='Policies')
+        second_root.save()
         icon_cases = [
             ('Report.pdf', 'data', 'office-attachment-pdf'),
             ('Letter.docx', 'data', 'office-attachment-document'),
@@ -92,6 +94,7 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
                 name='Guide.pdf', type='data',
                 description='The auroraneedle is only in the description')
             attachment.categories.append(root)
+            attachment.categories.append(second_root)
             attachment.save()
         self.assertEqual(attachment.icon, 'office-attachment-pdf')
         root.reload()
@@ -150,7 +153,8 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
 
         roots = launch_action(
             'office.action_attachment_by_category', None, config=config)
-        self.assertEqual([record.name for record in roots], ['Manuals'])
+        self.assertEqual(
+            [record.name for record in roots], ['Manuals', 'Policies'])
         self.assertEqual(roots[0].icon, 'tryton-folder')
         self.assertEqual(
             roots[0].record.__class__.__name__, 'office.category')
@@ -167,6 +171,14 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
             if record.record.__class__.__name__ == 'ir.attachment']
         self.assertEqual(
             union_attachment.icon, 'office-attachment-pdf')
+
+        second_root_union_id = second_root.id * 2 + 1
+        second_contents = Union.find([
+                ('parent', '=', second_root_union_id),
+                ])
+        self.assertEqual(
+            [record.name for record in second_contents], ['Guide.pdf'])
+        self.assertNotEqual(union_attachment.id, second_contents[0].id)
 
         open_attachment = launch_action(
             'office.wizard_attachment_category_open',
