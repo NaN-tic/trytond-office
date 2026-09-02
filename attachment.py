@@ -110,9 +110,7 @@ class Category(DeactivableMixin, tree(separator=' / '), ModelSQL, ModelView):
 
     name = fields.Char('Name', required=True, translate=True)
     view = fields.Boolean('View')
-    unique = fields.Boolean('Unique', states={
-            'invisible': ~Bool(Eval('view')),
-            })
+    unique = fields.Boolean('Unique')
     required = fields.Boolean('Required', states={
             'invisible': ~Bool(Eval('view')),
             })
@@ -748,7 +746,6 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                 ])
         unique_categories = Category.search([
                 ('unique', '=', True),
-                ('view', '=', True),
                 ])
         required_children = [Category.search([
                     ('parent', 'child_of', [required]),
