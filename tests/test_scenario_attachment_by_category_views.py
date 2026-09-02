@@ -2,8 +2,10 @@ import unittest
 from xml.etree import ElementTree
 
 from proteus import Model, launch_action
+from trytond.exceptions import UserError
 from trytond.modules.office.attachment import (
     INDEX_TEXT_MAX_LENGTH, split_markdown_paragraphs)
+from trytond.pyson import PYSONDecoder
 from trytond.tests.test_tryton import drop_db
 from trytond.tests.tools import activate_modules
 from trytond.transaction import Transaction
@@ -42,6 +44,10 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
             ModelData = config.pool.get('ir.model.data')
             CategoryModel = config.pool.get('office.category')
             UnionModel = config.pool.get('office.attachment.category')
+            definitions = CategoryModel.fields_get(['unique'])
+            states = PYSONDecoder().decode(
+                definitions['unique']['states'])
+            self.assertNotIn('invisible', states)
             view = UnionModel.fields_view_get(
                 view_id=ModelData.get_id(
                     'office', 'view_attachment_category_tree'),
@@ -62,8 +68,10 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
                 ".//page[@id='attachments']/field[@name='attachments']")
             self.assertIsNotNone(attachments)
 
-        root = Category(name='Manuals')
+        root = Category(name='Manuals', unique=True)
         root.save()
+        self.assertFalse(root.view)
+        self.assertTrue(root.unique)
         child = Category(name='Accounting', parent=root)
         child.save()
         second_root = Category(name='Policies')
@@ -179,6 +187,14 @@ class TestAttachmentByCategoryViews(unittest.TestCase):
         self.assertEqual(
             [record.name for record in second_contents], ['Guide.pdf'])
         self.assertNotEqual(union_attachment.id, second_contents[0].id)
+
+        with config.set_context(default_unlinked=True):
+            conflicting_attachment = Attachment(
+                name='Conflicting.pdf', type='data')
+            conflicting_attachment.categories.append(Category(root.id))
+            conflicting_attachment.categories.append(Category(child.id))
+            with self.assertRaises(UserError):
+                conflicting_attachment.save()
 
         open_attachment = launch_action(
             'office.wizard_attachment_category_open',
