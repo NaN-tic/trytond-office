@@ -282,6 +282,14 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
     @classmethod
     def __register__(cls, module_name):
         super().__register__(module_name)
+        # The singleton may have been recreated with a different id.
+        cursor = Transaction().connection.cursor()
+        attachment = cls.__table__()
+        dummy = str(cls._get_unlinked_resource())
+        cursor.execute(*attachment.update(
+                [attachment.resource], [dummy],
+                where=(attachment.resource.like('office.unlinked,%')
+                    & (attachment.resource != dummy))))
         if not backend.TableHandler.table_exist('brainbow_document'):
             return
 
