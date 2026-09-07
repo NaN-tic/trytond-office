@@ -1038,14 +1038,6 @@ class AttachmentCategoryOpen(Wizard):
                     ])
             return action, {}
 
-        collabora_url = getattr(record, 'collabora_url', None)
-        if collabora_url:
-            return {
-                'name': record.rec_name,
-                'type': 'ir.action.url',
-                'url': collabora_url,
-                }, {}
-
         pool = Pool()
         ModelData = pool.get('ir.model.data')
         Action = pool.get('ir.action')
