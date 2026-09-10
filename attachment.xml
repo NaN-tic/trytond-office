@@ -66,7 +66,8 @@
         <record model="ir.ui.view" id="view_attachment_list">
             <field name="model">ir.attachment</field>
             <field name="type">tree</field>
-            <field name="priority" eval="1"/>
+            <!-- Keep the editable ir view as the default for Manage... -->
+            <field name="priority" eval="20"/>
             <field name="name">attachment_list</field>
         </record>
         <record model="ir.ui.view" id="view_attachment_form">
