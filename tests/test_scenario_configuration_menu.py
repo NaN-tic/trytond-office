@@ -29,9 +29,8 @@ class TestConfigurationMenu(unittest.TestCase):
                 ])
 
         self.assertEqual(configuration.sequence, 0)
-        self.assertEqual(
-            [group.name for group in configuration.groups],
-            ['Administration'])
+        self.assertTrue(configuration.administration)
+        self.assertEqual(configuration.groups, [])
 
         office_configuration, = Menu.find([
                 ('name', '=', 'Configuration'),
