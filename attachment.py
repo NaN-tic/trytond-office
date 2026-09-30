@@ -492,17 +492,6 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
 
     @classmethod
     def create(cls, vlist):
-        vlist = [values.copy() for values in vlist]
-        dummy = None
-        for values in vlist:
-            if values.get(
-                    'unlinked', Transaction().context.get(
-                        'default_unlinked', False)):
-                if dummy is None:
-                    dummy = str(cls._get_unlinked_resource())
-                values['unlinked'] = True
-                values['resource'] = dummy
-            cls.calculate_fields(values)
         attachments = super().create(vlist)
         if not Transaction().context.get('office_migration'):
             cls.__queue__.extract_content(attachments)
@@ -510,23 +499,30 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
 
     @classmethod
     def write(cls, *args):
-        dummy = None
         actions = iter(args)
         new_args = []
         to_extract = []
         for records, values in zip(actions, actions):
-            values = values.copy()
-            if values.get('unlinked'):
-                if dummy is None:
-                    dummy = str(cls._get_unlinked_resource())
-                values['resource'] = dummy
-            cls.calculate_fields(values)
             new_args.extend([records, values])
-            if values.get('data_updated'):
+            if values.get('data_updated', 'data' in values):
                 to_extract.extend(records)
         super().write(*new_args)
         if to_extract and not Transaction().context.get('office_migration'):
             cls.__queue__.extract_content(to_extract)
+
+    @classmethod
+    def preprocess_values(cls, mode, values):
+        values = super().preprocess_values(mode, values)
+        unlinked = values.get('unlinked')
+        if mode == 'create':
+            unlinked = values.get(
+                'unlinked', Transaction().context.get(
+                    'default_unlinked', False))
+        if unlinked:
+            values['unlinked'] = True
+            values['resource'] = str(cls._get_unlinked_resource())
+        cls.calculate_fields(values)
+        return values
 
     @staticmethod
     def calculate_fields(values):

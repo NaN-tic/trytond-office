@@ -26,7 +26,9 @@ class TestUnlinkedResourceMigration(unittest.TestCase):
         document.save()
         archived = Attachment(
             name='Archived document', type='text', content='Archive',
-            unlinked=True, active=False)
+            unlinked=True)
+        archived.save()
+        archived.active = False
         archived.save()
         linked = Attachment(
             name='Linked document', type='text', content='Linked',
