@@ -2,6 +2,74 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "model:ir.model.button,string:chat_open_button"
+msgid "Open"
+msgstr "Abrir"
+
+msgctxt "field:office.chat,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:office.chat,users:"
+msgid "Users"
+msgstr "Usuarios"
+
+msgctxt "field:office.chat,image:"
+msgid "Image"
+msgstr "Imagen"
+
+msgctxt "field:office.chat,image_id:"
+msgid "Image ID"
+msgstr "Identificador de la imagen"
+
+msgctxt "field:office.chat,image_url:"
+msgid "Image URL"
+msgstr "URL de la imagen"
+
+msgctxt "field:office.chat,unread_messages:"
+msgid "Unread Messages"
+msgstr "Mensajes pendientes de leer"
+
+msgctxt "field:office.chat-res.user,chat:"
+msgid "Chat"
+msgstr "Chat"
+
+msgctxt "field:office.chat-res.user,user:"
+msgid "User"
+msgstr "Usuario"
+
+msgctxt "field:office.chat-res.user,last_read_message:"
+msgid "Last Read Message"
+msgstr "Último mensaje leído"
+
+msgctxt "model:office.chat,string:"
+msgid "Office Chat"
+msgstr "Chat de Office"
+
+msgctxt "model:office.chat-res.user,string:"
+msgid "Office Chat - User"
+msgstr "Chat de Office - Usuario"
+
+msgctxt "model:ir.action,name:action_chat"
+msgid "Chats"
+msgstr "Chats"
+
+msgctxt "model:ir.ui.menu,name:menu_chat"
+msgid "Chats"
+msgstr "Chats"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat"
+msgid "Chat participants"
+msgstr "Participantes del chat"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat_channel"
+msgid "Office chat participants"
+msgstr "Participantes del chat de Office"
+
+msgctxt "model:ir.message,text:msg_chat_add_follower"
+msgid "Manage office chat participants using the Users field."
+msgstr "Gestione los participantes del chat de Office mediante el campo Usuarios."
+
 msgctxt "field:ai.configuration,office_language_model:"
 msgid "Office Language Model"
 msgstr "Modelo de idioma de Office"
