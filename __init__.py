@@ -2,6 +2,7 @@ from trytond.pool import Pool
 
 from . import ai
 from . import attachment
+from . import chat
 from . import document
 from . import export
 
@@ -21,6 +22,10 @@ def register():
         attachment.CategoryReadWriteGroup,
         attachment.CategoryReadOnlyUser,
         attachment.CategoryReadWriteUser,
+        chat.Chat,
+        chat.ChatUser,
+        chat.Rule,
+        chat.Channel,
         document.Configuration,
         document.DocumentTemplate,
         document.DocumentCreateStart,

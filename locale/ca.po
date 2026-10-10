@@ -2,6 +2,62 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "model:ir.model.button,string:chat_open_button"
+msgid "Open"
+msgstr "Obre"
+
+msgctxt "field:office.chat,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:office.chat,users:"
+msgid "Users"
+msgstr "Usuaris"
+
+msgctxt "field:office.chat,image:"
+msgid "Image"
+msgstr "Imatge"
+
+msgctxt "field:office.chat,image_id:"
+msgid "Image ID"
+msgstr "Identificador de la imatge"
+
+msgctxt "field:office.chat,image_url:"
+msgid "Image URL"
+msgstr "URL de la imatge"
+
+msgctxt "field:office.chat-res.user,chat:"
+msgid "Chat"
+msgstr "Xat"
+
+msgctxt "field:office.chat-res.user,user:"
+msgid "User"
+msgstr "Usuari"
+
+msgctxt "model:office.chat,string:"
+msgid "Office Chat"
+msgstr "Xat d'Office"
+
+msgctxt "model:office.chat-res.user,string:"
+msgid "Office Chat - User"
+msgstr "Xat d'Office - Usuari"
+
+msgctxt "model:ir.action,name:action_chat"
+msgid "Chats"
+msgstr "Xats"
+
+msgctxt "model:ir.ui.menu,name:menu_chat"
+msgid "Chats"
+msgstr "Xats"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat"
+msgid "Chat participants"
+msgstr "Participants del xat"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat_channel"
+msgid "Office chat participants"
+msgstr "Participants del xat d'Office"
+
 msgctxt "field:ai.configuration,office_language_model:"
 msgid "Office Language Model"
 msgstr "Model d'idioma de Office"
@@ -577,3 +633,15 @@ msgstr "Crea"
 msgctxt "wizard_button:office.document.create,start,end:"
 msgid "Cancel"
 msgstr "Cancel·la"
+
+msgctxt "field:office.chat,unread_messages:"
+msgid "Unread Messages"
+msgstr "Missatges pendents de llegir"
+
+msgctxt "field:office.chat-res.user,last_read_message:"
+msgid "Last Read Message"
+msgstr "Últim missatge llegit"
+
+msgctxt "model:ir.message,text:msg_chat_add_follower"
+msgid "Manage office chat participants using the Users field."
+msgstr "Gestioneu els participants del xat d'oficina mitjançant el camp Usuaris."

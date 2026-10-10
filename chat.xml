@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="chat_view_list">
+            <field name="model">office.chat</field>
+            <field name="type">tree</field>
+            <field name="name">chat_list</field>
+        </record>
+        <record model="ir.ui.view" id="chat_view_form">
+            <field name="model">office.chat</field>
+            <field name="type">form</field>
+            <field name="name">chat_form</field>
+        </record>
+        <record model="ir.action.act_window" id="action_chat">
+            <field name="name">Chats</field>
+            <field name="res_model">office.chat</field>
+            <field name="context" eval="{'open_chat_on_activate': True}" pyson="1"/>
+        </record>
+        <record model="ir.model.button" id="chat_open_button">
+            <field name="name">open_chat</field>
+            <field name="string">Open</field>
+            <field name="model">office.chat</field>
+        </record>
+        <record model="ir.action.act_window.view" id="action_chat_list">
+            <field name="act_window" ref="action_chat"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="chat_view_list"/>
+        </record>
+        <record model="ir.action.act_window.view" id="action_chat_form">
+            <field name="act_window" ref="action_chat"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="chat_view_form"/>
+        </record>
+        <menuitem id="menu_chat" parent="menu_office" action="action_chat"
+            sequence="4" icon="tryton-chat"/>
+
+        <record model="ir.model.access" id="access_chat">
+            <field name="model">office.chat</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.model.access" id="access_chat_user">
+            <field name="model">office.chat-res.user</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.rule.group" id="rule_group_chat">
+            <field name="name">Chat participants</field>
+            <field name="model">office.chat</field>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_chat">
+            <field name="rule_group" ref="rule_group_chat"/>
+            <field name="domain" eval="[('users', '=', Eval('user_id', -1))]" pyson="1"/>
+        </record>
+        <record model="ir.rule.group" id="rule_group_chat_channel">
+            <field name="name">Office chat participants</field>
+            <field name="model">ir.chat.channel</field>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_chat_channel">
+            <field name="rule_group" ref="rule_group_chat_channel"/>
+            <field name="domain" eval="['OR', ('resource', 'not like', 'office.chat,%'), ('resource.users', '=', Eval('user_id', -1), 'office.chat')]" pyson="1"/>
+        </record>
+    </data>
+</tryton>

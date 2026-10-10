@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<form>
+    <label name="name"/>
+    <field name="name"/>
+    <field name="image" widget="image" height="100" width="100"/>
+    <newline/>
+    <field name="users" colspan="4"/>
+</form>
