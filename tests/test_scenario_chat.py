@@ -36,6 +36,10 @@ class TestChat(unittest.TestCase):
         alice.save()
         zoe = User(name='Zoe', login='office-zoe')
         zoe.save()
+        outsider = User(name='Outsider', login='office-outsider')
+        outsider.save()
+        self.assertFalse(outsider.administrator)
+        self.assertEqual(outsider.groups, alice.groups)
 
         menu, = Menu.find([('name', '=', 'Chats')])
         document, = Menu.find([('name', '=', 'New Document')])
@@ -148,6 +152,12 @@ class TestChat(unittest.TestCase):
         set_user(zoe, config)
         self.assertEqual(Chat(chat_id).unread_messages, 0)
 
+        # Use a regular user: administrators bypass button access checks.
+        set_user(outsider, config)
+        self.assertEqual(Chat.find([]), [])
+        with self.assertRaises(AccessError):
+            Chat._proxy.open_chat([chat_id], config.context)
+
         # Users with identical groups must not share a cached access domain.
         set_user(admin_id, config)
         self.assertEqual(Chat.find([]), [])
@@ -164,8 +174,6 @@ class TestChat(unittest.TestCase):
             Channel._proxy.subscribe(resource, None, config.context)
         with self.assertRaises(AccessError):
             Chat._proxy.mark_read([chat_id], message_id, config.context)
-        with self.assertRaises(AccessError):
-            Chat._proxy.open_chat([chat_id], config.context)
         with self.assertRaises(AccessError):
             Message._proxy.read([message_id], ['content'], config.context)
         with self.assertRaises(AccessError):
