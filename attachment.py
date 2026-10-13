@@ -147,10 +147,14 @@ class Category(DeactivableMixin, tree(separator=' / '), ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
-        for old_table in ['brainbow_category', 'brainbow_tag', 'office_tag']:
+        old_tables = ['brainbow_category', 'brainbow_tag', 'office_tag']
+        for old_table in old_tables:
             if (backend.TableHandler.table_exist(old_table)
                     and not backend.TableHandler.table_exist(cls._table)):
                 backend.TableHandler.table_rename(old_table, cls._table)
+        handler = cls.__table_handler__(module_name)
+        for old_table in old_tables:
+            handler.drop_constraint('name_parent_exclude', table=old_table)
         super().__register__(module_name)
 
     def access_users(self):
