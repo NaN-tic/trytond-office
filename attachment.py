@@ -201,7 +201,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
     icon = fields.Function(
         fields.Char('Icon', depends=['type', 'mimetype', 'name']), 'get_icon')
     content = fields.Text('Content', states={
-            'readonly': Eval('type') != 'text',
+            'editable': Eval('type') == 'text',
             }, depends=['type'])
     content_search = fields.Function(
         fields.Char('Content'), 'get_content_search',
