@@ -589,8 +589,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                     attachment.content = image_data['literal_text']
                     attachment.description = image_data['description']
             attachment.set_language()
-        with without_check_access():
-            cls.save(attachments)
+        cls.save(attachments)
 
     def _image_ocr(self):
         if not (self.mimetype or '').startswith('image/'):
