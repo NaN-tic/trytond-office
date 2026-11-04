@@ -1,0 +1,651 @@
+#
+msgid ""
+msgstr ""
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "model:ir.model.button,string:chat_open_button"
+msgid "Open"
+msgstr "打开"
+
+msgctxt "field:office.chat,name:"
+msgid "Name"
+msgstr "名称"
+
+msgctxt "field:office.chat,users:"
+msgid "Users"
+msgstr "用户"
+
+msgctxt "field:office.chat,image:"
+msgid "Image"
+msgstr "图片"
+
+msgctxt "field:office.chat,image_id:"
+msgid "Image ID"
+msgstr "图片 ID"
+
+msgctxt "field:office.chat,image_url:"
+msgid "Image URL"
+msgstr "图片 URL"
+
+msgctxt "field:office.chat-res.user,chat:"
+msgid "Chat"
+msgstr "聊天"
+
+msgctxt "field:office.chat-res.user,user:"
+msgid "User"
+msgstr "用户"
+
+msgctxt "model:office.chat,string:"
+msgid "Office Chat"
+msgstr "办公室聊天"
+
+msgctxt "model:office.chat-res.user,string:"
+msgid "Office Chat - User"
+msgstr "办公室聊天 - 用户"
+
+msgctxt "model:ir.action,name:action_chat"
+msgid "Chats"
+msgstr "聊天"
+
+msgctxt "model:ir.ui.menu,name:menu_chat"
+msgid "Chats"
+msgstr "聊天"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat"
+msgid "Chat participants"
+msgstr "聊天参与者"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat_channel"
+msgid "Office chat participants"
+msgstr "办公室聊天参与者"
+
+msgctxt "field:ai.configuration,office_language_model:"
+msgid "Office Language Model"
+msgstr "办公室语言模型"
+
+msgctxt "field:ai.configuration,office_title_model:"
+msgid "Office Title Model"
+msgstr "办公室标题模型"
+
+msgctxt "field:ir.attachment,categories:"
+msgid "Categories"
+msgstr "类别"
+
+msgctxt "field:ir.attachment,categories_char:"
+msgid "Categories"
+msgstr "类别"
+
+msgctxt "field:ir.attachment,content:"
+msgid "Content"
+msgstr "内容"
+
+msgctxt "field:ir.attachment,content_search:"
+msgid "Content"
+msgstr "内容"
+
+msgctxt "field:ir.attachment,data_updated:"
+msgid "Data Updated"
+msgstr "数据已更新"
+
+msgctxt "field:ir.attachment,icon:"
+msgid "Icon"
+msgstr "图标"
+
+msgctxt "field:ir.attachment,language:"
+msgid "Language"
+msgstr "语言"
+
+msgctxt "field:ir.attachment,mimetype:"
+msgid "Mimetype"
+msgstr "MIME 类型"
+
+msgctxt "field:ir.attachment,reader_groups:"
+msgid "Reader Groups"
+msgstr "读取权限组"
+
+msgctxt "field:ir.attachment,replaced_by:"
+msgid "Replaced By"
+msgstr "替换为"
+
+msgctxt "field:ir.attachment,unlinked:"
+msgid "Unlinked"
+msgstr "未关联"
+
+msgctxt "field:ir.attachment,writer_groups:"
+msgid "Writer Groups"
+msgstr "写入权限组"
+
+msgctxt "field:office.attachment-category,attachment:"
+msgid "Attachment"
+msgstr "附件"
+
+msgctxt "field:office.attachment-category,category:"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "field:office.attachment-reader-group,attachment:"
+msgid "Attachment"
+msgstr "附件"
+
+msgctxt "field:office.attachment-reader-group,reader_group:"
+msgid "Reader Group"
+msgstr "读取权限组"
+
+msgctxt "field:office.attachment-writer-group,attachment:"
+msgid "Attachment"
+msgstr "附件"
+
+msgctxt "field:office.attachment-writer-group,writer_group:"
+msgid "Writer Group"
+msgstr "写入权限组"
+
+msgctxt "field:office.attachment.category,active:"
+msgid "Active"
+msgstr "启用"
+
+msgctxt "field:office.attachment.category,children:"
+msgid "Children"
+msgstr "子项"
+
+msgctxt "field:office.attachment.category,icon:"
+msgid "Icon"
+msgstr "图标"
+
+msgctxt "field:office.attachment.category,name:"
+msgid "Name"
+msgstr "名称"
+
+msgctxt "field:office.attachment.category,parent:"
+msgid "Parent"
+msgstr "上级"
+
+msgctxt "field:office.attachment.category,record:"
+msgid "Record"
+msgstr "记录"
+
+msgctxt "field:office.attachment.export.start,format:"
+msgid "Output Format"
+msgstr "输出格式"
+
+msgctxt "field:office.category,attachments:"
+msgid "Attachments"
+msgstr "附件"
+
+msgctxt "field:office.category,children:"
+msgid "Children"
+msgstr "子项"
+
+msgctxt "field:office.category,description:"
+msgid "Description"
+msgstr "描述"
+
+msgctxt "field:office.category,name:"
+msgid "Name"
+msgstr "名称"
+
+msgctxt "field:office.category,parent:"
+msgid "Parent"
+msgstr "上级"
+
+msgctxt "field:office.category,read_only_groups:"
+msgid "Read-only Groups"
+msgstr "只读用户组"
+
+msgctxt "field:office.category,read_only_users:"
+msgid "Read-only Users"
+msgstr "只读用户"
+
+msgctxt "field:office.category,read_write_groups:"
+msgid "Read-write Groups"
+msgstr "读写用户组"
+
+msgctxt "field:office.category,read_write_users:"
+msgid "Read-write Users"
+msgstr "读写用户"
+
+msgctxt "field:office.category,required:"
+msgid "Required"
+msgstr "必填项"
+
+msgctxt "field:office.category,unique:"
+msgid "Unique"
+msgstr "唯一"
+
+msgctxt "field:office.category,view:"
+msgid "View"
+msgstr "视图"
+
+msgctxt "field:office.category-read-only-group,category:"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "field:office.category-read-only-group,group:"
+msgid "Group"
+msgstr "组"
+
+msgctxt "field:office.category-read-only-user,category:"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "field:office.category-read-only-user,user:"
+msgid "User"
+msgstr "用户"
+
+msgctxt "field:office.category-read-write-group,category:"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "field:office.category-read-write-group,group:"
+msgid "Group"
+msgstr "组"
+
+msgctxt "field:office.category-read-write-user,category:"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "field:office.category-read-write-user,user:"
+msgid "User"
+msgstr "用户"
+
+msgctxt "field:office.configuration,default_filename:"
+msgid "Default Filename"
+msgstr "默认文件名"
+
+msgctxt "field:office.configuration,image_ocr_model:"
+msgid "Image OCR Model"
+msgstr "图像 OCR 模型"
+
+msgctxt "field:office.document.create.start,categories:"
+msgid "Categories"
+msgstr "类别"
+
+msgctxt "field:office.document.create.start,filename:"
+msgid "Filename"
+msgstr "文件名"
+
+msgctxt "field:office.document.create.start,resource:"
+msgid "Resource"
+msgstr "资源"
+
+msgctxt "field:office.document.create.start,template:"
+msgid "Template"
+msgstr "模板"
+
+msgctxt "field:office.document.create.start,unlinked:"
+msgid "Unlinked"
+msgstr "未关联"
+
+msgctxt "field:office.document.template,content:"
+msgid "Content"
+msgstr "内容"
+
+msgctxt "field:office.document.template,data:"
+msgid "File"
+msgstr "文件"
+
+msgctxt "field:office.document.template,extension:"
+msgid "Extension"
+msgstr "扩展"
+
+msgctxt "field:office.document.template,mime_type:"
+msgid "MIME Type"
+msgstr "MIME 类型"
+
+msgctxt "field:office.document.template,name:"
+msgid "Name"
+msgstr "名称"
+
+msgctxt "field:office.document.template,type:"
+msgid "Type"
+msgstr "科目"
+
+msgctxt "field:office.document.template,url:"
+msgid "URL"
+msgstr "网址"
+
+msgctxt "field:office.unlinked,name:"
+msgid "Name"
+msgstr "名称"
+
+msgctxt "model:ir.action,name:action_attachment"
+msgid "Documents & Attachments"
+msgstr "文档和附件"
+
+msgctxt "model:ir.action,name:action_attachment_by_category"
+msgid "Documents by Category"
+msgstr "按类别查看文档"
+
+msgctxt "model:ir.action,name:action_attachment_created"
+msgid "Document or Attachment"
+msgstr "文档或附件"
+
+msgctxt "model:ir.action,name:action_configuration"
+msgid "Office Configuration"
+msgstr "办公室配置"
+
+msgctxt "model:ir.action,name:action_document_template"
+msgid "Document Templates"
+msgstr "文档模板"
+
+msgctxt "model:ir.action,name:action_office_category"
+msgid "Categories"
+msgstr "类别"
+
+msgctxt "model:ir.action,name:action_office_category_tree"
+msgid "Category Tree"
+msgstr "类别树"
+
+msgctxt "model:ir.action,name:report_attachment_custom"
+msgid "Download as..."
+msgstr "下载为…"
+
+msgctxt "model:ir.action,name:report_attachment_microsoft_office"
+msgid "Download as Microsoft Office"
+msgstr "下载为 Microsoft Office 格式"
+
+msgctxt "model:ir.action,name:report_attachment_open_document"
+msgid "Download as OpenDocument"
+msgstr "下载为 OpenDocument 格式"
+
+msgctxt "model:ir.action,name:report_attachment_pdf"
+msgid "Download as PDF"
+msgstr "下载为 PDF"
+
+msgctxt "model:ir.action,name:wizard_attachment_category_open"
+msgid "Open"
+msgstr "打开"
+
+msgctxt "model:ir.action,name:wizard_attachment_category_open_from_category"
+msgid "Open"
+msgstr "打开"
+
+msgctxt "model:ir.action,name:wizard_attachment_export"
+msgid "Download as..."
+msgstr "下载为…"
+
+msgctxt "model:ir.action,name:wizard_document_create"
+msgid "Create"
+msgstr "创建"
+
+msgctxt "model:ir.action,name:wizard_document_create_menu"
+msgid "New Document"
+msgstr "新建文档"
+
+msgctxt "model:ir.action.act_window.domain,name:action_attachment_domain_all"
+msgid "All"
+msgstr "全部"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:action_attachment_domain_attachments"
+msgid "Attachments"
+msgstr "附件"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:action_attachment_domain_documents"
+msgid "Documents"
+msgstr "文档"
+
+msgctxt "model:ir.message,text:msg_attachment_category_uniq"
+msgid "Attachment can only have the same Category once."
+msgstr "附件不能重复关联同一类别。"
+
+#, python-format
+msgctxt "model:ir.message,text:msg_attachment_conversion_failed"
+msgid "LibreOffice could not convert the attachment: %(error)s"
+msgstr "LibreOffice 无法转换附件：%(error)s"
+
+#, python-format
+msgctxt "model:ir.message,text:msg_attachment_link_download_failed"
+msgid "The linked file could not be downloaded: %(error)s"
+msgstr "无法下载链接文件：%(error)s"
+
+msgctxt "model:ir.message,text:msg_attachment_link_too_large"
+msgid "The linked file is larger than 100 MB."
+msgstr "链接文件大于 100 MB。"
+
+msgctxt "model:ir.message,text:msg_attachment_reader_group_uniq"
+msgid "Attachment can only have the same Reader Group once."
+msgstr "附件不能重复关联同一读取权限组。"
+
+#, python-format
+msgctxt "model:ir.message,text:msg_attachment_without_data"
+msgid "Attachment \"%(attachment)s\" has no file to download."
+msgstr "附件“%(attachment)s”没有可下载的文件。"
+
+msgctxt "model:ir.message,text:msg_attachment_writer_group_uniq"
+msgid "Attachment can only have the same Writer Group once."
+msgstr "附件不能重复关联同一写入权限组。"
+
+msgctxt "model:ir.message,text:msg_category_group_unique"
+msgid "A group can be linked to a category only once for this access level."
+msgstr "同一访问级别下，用户组只能与类别关联一次。"
+
+msgctxt "model:ir.message,text:msg_category_name_unique"
+msgid "Category name must be unique per parent."
+msgstr "同一父类别下的类别名称必须唯一。"
+
+msgctxt "model:ir.message,text:msg_category_user_unique"
+msgid "A user can be linked to a category only once for this access level."
+msgstr "同一访问级别下，用户只能与类别关联一次。"
+
+msgctxt "model:ir.message,text:msg_invalid_attachment_link"
+msgid "The attachment link must use HTTP or HTTPS."
+msgstr "附件链接必须使用 HTTP 或 HTTPS。"
+
+msgctxt "model:ir.message,text:msg_invalid_output_format"
+msgid "The selected output format is not valid."
+msgstr "所选输出格式无效。"
+
+#, python-format
+msgctxt "model:ir.message,text:msg_missing_categories"
+msgid ""
+"Attachment \"%(document)s\" must have one of the categories inside "
+"\"%(categories)s\"."
+msgstr "附件“%(document)s”必须属于“%(categories)s”中的一个类别。"
+
+msgctxt "model:ir.message,text:msg_no_attachments_selected"
+msgid "Select at least one attachment."
+msgstr "请至少选择一个附件。"
+
+#, python-format
+msgctxt "model:ir.message,text:msg_repeated_unique"
+msgid ""
+"Attachment \"%(document)s\" has more than one child category of "
+"\"%(category)s\"."
+msgstr "附件“%(document)s”属于“%(category)s”的多个子类别。"
+
+msgctxt "model:ir.message,text:msg_soffice_not_found"
+msgid "LibreOffice (soffice) is not installed on the server."
+msgstr "服务器未安装 LibreOffice（soffice）。"
+
+msgctxt "model:ir.message,text:msg_unnamed_document"
+msgid "unnamed document"
+msgstr "未命名文档"
+
+msgctxt "model:ir.model.button,string:attachment_create_from_template_button"
+msgid "New Document"
+msgstr "新建文档"
+
+msgctxt "model:ir.ui.menu,name:menu_attachment"
+msgid "Documents & Attachments"
+msgstr "文档和附件"
+
+msgctxt "model:ir.ui.menu,name:menu_attachment_by_category"
+msgid "Documents by Category"
+msgstr "按类别查看文档"
+
+msgctxt "model:ir.ui.menu,name:menu_category"
+msgid "Categories"
+msgstr "类别"
+
+msgctxt "model:ir.ui.menu,name:menu_category_tree"
+msgid "Category Tree"
+msgstr "类别树"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration"
+msgid "Configuration"
+msgstr "设置"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration_form"
+msgid "Configuration"
+msgstr "设置"
+
+msgctxt "model:ir.ui.menu,name:menu_document_create"
+msgid "New Document"
+msgstr "新建文档"
+
+msgctxt "model:ir.ui.menu,name:menu_document_template"
+msgid "Document Templates"
+msgstr "文档模板"
+
+msgctxt "model:ir.ui.menu,name:menu_office"
+msgid "Office"
+msgstr "办公室"
+
+msgctxt "model:office.attachment-category,string:"
+msgid "Office Attachment - Category"
+msgstr "办公室附件 - 类别"
+
+msgctxt "model:office.attachment-reader-group,string:"
+msgid "Office Attachment - Reader - Group"
+msgstr "办公室附件 - 读取权限 - 用户组"
+
+msgctxt "model:office.attachment-writer-group,string:"
+msgid "Office Attachment - Writer - Group"
+msgstr "办公室附件 - 写入权限 - 用户组"
+
+msgctxt "model:office.attachment.category,string:"
+msgid "Office Attachment Category"
+msgstr "办公室附件类别"
+
+msgctxt "model:office.attachment.export.start,string:"
+msgid "Office Attachment Export Start"
+msgstr "办公室附件导出：开始"
+
+msgctxt "model:office.category,string:"
+msgid "Office Category"
+msgstr "办公室类别"
+
+msgctxt "model:office.category-read-only-group,string:"
+msgid "Office Category - Read - Only - Group"
+msgstr "办公室类别 - 只读 - 用户组"
+
+msgctxt "model:office.category-read-only-user,string:"
+msgid "Office Category - Read - Only - User"
+msgstr "办公室类别 - 只读 - 用户"
+
+msgctxt "model:office.category-read-write-group,string:"
+msgid "Office Category - Read - Write - Group"
+msgstr "办公室类别 - 读写 - 用户组"
+
+msgctxt "model:office.category-read-write-user,string:"
+msgid "Office Category - Read - Write - User"
+msgstr "办公室类别 - 读写 - 用户"
+
+msgctxt "model:office.configuration,string:"
+msgid "Office Configuration"
+msgstr "办公室配置"
+
+msgctxt "model:office.document.create.start,string:"
+msgid "Office Document Create Start"
+msgstr "办公室文档创建：开始"
+
+msgctxt "model:office.document.template,name:template_presentation"
+msgid "Presentation"
+msgstr "演示文稿"
+
+msgctxt "model:office.document.template,name:template_spreadsheet"
+msgid "Spreadsheet"
+msgstr "电子表格"
+
+msgctxt "model:office.document.template,name:template_text_document"
+msgid "Text Document"
+msgstr "文本文档"
+
+msgctxt "model:office.document.template,string:"
+msgid "Office Document Template"
+msgstr "办公室文档模板"
+
+msgctxt "model:office.unlinked,string:"
+msgid "Office Unlinked"
+msgstr "办公室未关联项"
+
+msgctxt "model:res.group,name:group_admin"
+msgid "Office Administrator"
+msgstr "办公室管理员"
+
+msgctxt "model:res.group,name:group_office"
+msgid "Office"
+msgstr "办公室"
+
+msgctxt "selection:ir.attachment,type:"
+msgid "Text"
+msgstr "文本"
+
+msgctxt "selection:office.attachment.category,record:"
+msgid "Attachment"
+msgstr "附件"
+
+msgctxt "selection:office.attachment.category,record:"
+msgid "Category"
+msgstr "类别"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Data"
+msgstr "数据"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Link"
+msgstr "链接"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Text"
+msgstr "文本"
+
+msgctxt "view:ir.attachment:"
+msgid "Access"
+msgstr "访问权限"
+
+msgctxt "view:ir.attachment:"
+msgid "Technical"
+msgstr "技术"
+
+msgctxt "view:office.category:"
+msgid "Access"
+msgstr "访问权限"
+
+msgctxt "view:office.category:"
+msgid "Attachments"
+msgstr "附件"
+
+msgctxt "wizard_button:office.attachment.export,start,download:"
+msgid "Download"
+msgstr "下载"
+
+msgctxt "wizard_button:office.attachment.export,start,end:"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "wizard_button:office.document.create,start,create_:"
+msgid "Create"
+msgstr "创建"
+
+msgctxt "wizard_button:office.document.create,start,end:"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "field:office.chat,unread_messages:"
+msgid "Unread Messages"
+msgstr "未读消息"
+
+msgctxt "field:office.chat-res.user,last_read_message:"
+msgid "Last Read Message"
+msgstr "最后已读消息"
+
+msgctxt "model:ir.message,text:msg_chat_add_follower"
+msgid "Manage office chat participants using the Users field."
+msgstr "使用“用户”字段管理办公室聊天参与者。"
