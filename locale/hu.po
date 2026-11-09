@@ -1,0 +1,660 @@
+#
+msgid ""
+msgstr ""
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "model:ir.model.button,string:chat_open_button"
+msgid "Open"
+msgstr "nyitott"
+
+msgctxt "field:office.chat,name:"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "field:office.chat,users:"
+msgid "Users"
+msgstr "Felhasználók"
+
+msgctxt "field:office.chat,image:"
+msgid "Image"
+msgstr "Kép"
+
+msgctxt "field:office.chat,image_id:"
+msgid "Image ID"
+msgstr "Képazonosító"
+
+msgctxt "field:office.chat,image_url:"
+msgid "Image URL"
+msgstr "Kép URL-je"
+
+msgctxt "field:office.chat-res.user,chat:"
+msgid "Chat"
+msgstr "Csevegés"
+
+msgctxt "field:office.chat-res.user,user:"
+msgid "User"
+msgstr "Felhasználó"
+
+msgctxt "model:office.chat,string:"
+msgid "Office Chat"
+msgstr "Irodai csevegés"
+
+msgctxt "model:office.chat-res.user,string:"
+msgid "Office Chat - User"
+msgstr "Irodai csevegés – Felhasználó"
+
+msgctxt "model:ir.action,name:action_chat"
+msgid "Chats"
+msgstr "Csevegések"
+
+msgctxt "model:ir.ui.menu,name:menu_chat"
+msgid "Chats"
+msgstr "Csevegések"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat"
+msgid "Chat participants"
+msgstr "A csevegés résztvevői"
+
+msgctxt "model:ir.rule.group,name:rule_group_chat_channel"
+msgid "Office chat participants"
+msgstr "Az irodai csevegés résztvevői"
+
+msgctxt "field:ai.configuration,office_language_model:"
+msgid "Office Language Model"
+msgstr "Irodai nyelvi modell"
+
+msgctxt "field:ai.configuration,office_title_model:"
+msgid "Office Title Model"
+msgstr "Irodai címmodell"
+
+msgctxt "field:ir.attachment,categories:"
+msgid "Categories"
+msgstr "Kategóriák"
+
+msgctxt "field:ir.attachment,categories_char:"
+msgid "Categories"
+msgstr "Kategóriák"
+
+msgctxt "field:ir.attachment,content:"
+msgid "Content"
+msgstr "Tartalom"
+
+msgctxt "field:ir.attachment,content_search:"
+msgid "Content"
+msgstr "Tartalom"
+
+msgctxt "field:ir.attachment,data_updated:"
+msgid "Data Updated"
+msgstr "Adatok frissítve"
+
+msgctxt "field:ir.attachment,icon:"
+msgid "Icon"
+msgstr "Ikon"
+
+msgctxt "field:ir.attachment,language:"
+msgid "Language"
+msgstr "Nyelv"
+
+msgctxt "field:ir.attachment,mimetype:"
+msgid "Mimetype"
+msgstr "MIME-típus"
+
+msgctxt "field:ir.attachment,reader_groups:"
+msgid "Reader Groups"
+msgstr "Olvasói csoportok"
+
+msgctxt "field:ir.attachment,replaced_by:"
+msgid "Replaced By"
+msgstr "Helyettesítő"
+
+msgctxt "field:ir.attachment,unlinked:"
+msgid "Unlinked"
+msgstr "Nincs összekapcsolva"
+
+msgctxt "field:ir.attachment,writer_groups:"
+msgid "Writer Groups"
+msgstr "Írói csoportok"
+
+msgctxt "field:office.attachment-category,attachment:"
+msgid "Attachment"
+msgstr "Melléklet"
+
+msgctxt "field:office.attachment-category,category:"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "field:office.attachment-reader-group,attachment:"
+msgid "Attachment"
+msgstr "Melléklet"
+
+msgctxt "field:office.attachment-reader-group,reader_group:"
+msgid "Reader Group"
+msgstr "Olvasói csoport"
+
+msgctxt "field:office.attachment-writer-group,attachment:"
+msgid "Attachment"
+msgstr "Melléklet"
+
+msgctxt "field:office.attachment-writer-group,writer_group:"
+msgid "Writer Group"
+msgstr "Írói csoport"
+
+msgctxt "field:office.attachment.category,active:"
+msgid "Active"
+msgstr "Aktív"
+
+msgctxt "field:office.attachment.category,children:"
+msgid "Children"
+msgstr "Alárendelt rekordok"
+
+msgctxt "field:office.attachment.category,icon:"
+msgid "Icon"
+msgstr "Ikon"
+
+msgctxt "field:office.attachment.category,name:"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "field:office.attachment.category,parent:"
+msgid "Parent"
+msgstr "Fölérendelt"
+
+msgctxt "field:office.attachment.category,record:"
+msgid "Record"
+msgstr "Rekord"
+
+msgctxt "field:office.attachment.export.start,format:"
+msgid "Output Format"
+msgstr "Kimeneti formátum"
+
+msgctxt "field:office.category,attachments:"
+msgid "Attachments"
+msgstr "Mellékletek"
+
+msgctxt "field:office.category,children:"
+msgid "Children"
+msgstr "Alárendelt rekordok"
+
+msgctxt "field:office.category,description:"
+msgid "Description"
+msgstr "Leírás"
+
+msgctxt "field:office.category,name:"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "field:office.category,parent:"
+msgid "Parent"
+msgstr "Fölérendelt"
+
+msgctxt "field:office.category,read_only_groups:"
+msgid "Read-only Groups"
+msgstr "Csak olvasási jogú csoportok"
+
+msgctxt "field:office.category,read_only_users:"
+msgid "Read-only Users"
+msgstr "Csak olvasási jogú felhasználók"
+
+msgctxt "field:office.category,read_write_groups:"
+msgid "Read-write Groups"
+msgstr "Írási és olvasási jogú csoportok"
+
+msgctxt "field:office.category,read_write_users:"
+msgid "Read-write Users"
+msgstr "Írási és olvasási jogú felhasználók"
+
+msgctxt "field:office.category,required:"
+msgid "Required"
+msgstr "Kötelezõ"
+
+msgctxt "field:office.category,unique:"
+msgid "Unique"
+msgstr "Egyedi"
+
+msgctxt "field:office.category,view:"
+msgid "View"
+msgstr "Nézet"
+
+msgctxt "field:office.category-read-only-group,category:"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "field:office.category-read-only-group,group:"
+msgid "Group"
+msgstr "Csoport"
+
+msgctxt "field:office.category-read-only-user,category:"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "field:office.category-read-only-user,user:"
+msgid "User"
+msgstr "Felhasználó"
+
+msgctxt "field:office.category-read-write-group,category:"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "field:office.category-read-write-group,group:"
+msgid "Group"
+msgstr "Csoport"
+
+msgctxt "field:office.category-read-write-user,category:"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "field:office.category-read-write-user,user:"
+msgid "User"
+msgstr "Felhasználó"
+
+msgctxt "field:office.configuration,default_filename:"
+msgid "Default Filename"
+msgstr "Alapértelmezett fájlnév"
+
+msgctxt "field:office.configuration,image_ocr_model:"
+msgid "Image OCR Model"
+msgstr "Képfelismerő OCR-modell"
+
+msgctxt "field:office.document.create.start,categories:"
+msgid "Categories"
+msgstr "Kategóriák"
+
+msgctxt "field:office.document.create.start,filename:"
+msgid "Filename"
+msgstr "Fájlnév"
+
+msgctxt "field:office.document.create.start,resource:"
+msgid "Resource"
+msgstr "Elem"
+
+msgctxt "field:office.document.create.start,template:"
+msgid "Template"
+msgstr "Sablon"
+
+msgctxt "field:office.document.create.start,unlinked:"
+msgid "Unlinked"
+msgstr "Nincs összekapcsolva"
+
+msgctxt "field:office.document.template,content:"
+msgid "Content"
+msgstr "Tartalom"
+
+msgctxt "field:office.document.template,data:"
+msgid "File"
+msgstr "Fájl"
+
+msgctxt "field:office.document.template,extension:"
+msgid "Extension"
+msgstr "Dokumentum típusa"
+
+msgctxt "field:office.document.template,mime_type:"
+msgid "MIME Type"
+msgstr "MIME-típus"
+
+msgctxt "field:office.document.template,name:"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "field:office.document.template,type:"
+msgid "Type"
+msgstr "Típus"
+
+msgctxt "field:office.document.template,url:"
+msgid "URL"
+msgstr "URL"
+
+msgctxt "field:office.unlinked,name:"
+msgid "Name"
+msgstr "Név"
+
+msgctxt "model:ir.action,name:action_attachment"
+msgid "Documents & Attachments"
+msgstr "Dokumentumok és mellékletek"
+
+msgctxt "model:ir.action,name:action_attachment_by_category"
+msgid "Documents by Category"
+msgstr "Dokumentumok kategóriánként"
+
+msgctxt "model:ir.action,name:action_attachment_created"
+msgid "Document or Attachment"
+msgstr "Dokumentum vagy melléklet"
+
+msgctxt "model:ir.action,name:action_configuration"
+msgid "Office Configuration"
+msgstr "Irodai beállítások"
+
+msgctxt "model:ir.action,name:action_document_template"
+msgid "Document Templates"
+msgstr "Dokumentumsablonok"
+
+msgctxt "model:ir.action,name:action_office_category"
+msgid "Categories"
+msgstr "Kategóriák"
+
+msgctxt "model:ir.action,name:action_office_category_tree"
+msgid "Category Tree"
+msgstr "Kategóriafa"
+
+msgctxt "model:ir.action,name:report_attachment_custom"
+msgid "Download as..."
+msgstr "Letöltés másként…"
+
+msgctxt "model:ir.action,name:report_attachment_microsoft_office"
+msgid "Download as Microsoft Office"
+msgstr "Letöltés Microsoft Office-formátumban"
+
+msgctxt "model:ir.action,name:report_attachment_open_document"
+msgid "Download as OpenDocument"
+msgstr "Letöltés OpenDocument-formátumban"
+
+msgctxt "model:ir.action,name:report_attachment_pdf"
+msgid "Download as PDF"
+msgstr "Letöltés PDF-ként"
+
+msgctxt "model:ir.action,name:wizard_attachment_category_open"
+msgid "Open"
+msgstr "nyitott"
+
+msgctxt "model:ir.action,name:wizard_attachment_category_open_from_category"
+msgid "Open"
+msgstr "nyitott"
+
+msgctxt "model:ir.action,name:wizard_attachment_export"
+msgid "Download as..."
+msgstr "Letöltés másként…"
+
+msgctxt "model:ir.action,name:wizard_document_create"
+msgid "Create"
+msgstr "Létrehozás"
+
+msgctxt "model:ir.action,name:wizard_document_create_menu"
+msgid "New Document"
+msgstr "Új dokumentum"
+
+msgctxt "model:ir.action.act_window.domain,name:action_attachment_domain_all"
+msgid "All"
+msgstr "összes"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:action_attachment_domain_attachments"
+msgid "Attachments"
+msgstr "Mellékletek"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:action_attachment_domain_documents"
+msgid "Documents"
+msgstr "Dokumentumok"
+
+msgctxt "model:ir.message,text:msg_attachment_category_uniq"
+msgid "Attachment can only have the same Category once."
+msgstr "Ugyanaz a kategória csak egyszer rendelhető egy melléklethez."
+
+#, python-format
+msgctxt "model:ir.message,text:msg_attachment_conversion_failed"
+msgid "LibreOffice could not convert the attachment: %(error)s"
+msgstr "A LibreOffice nem tudta átalakítani a mellékletet: %(error)s"
+
+#, python-format
+msgctxt "model:ir.message,text:msg_attachment_link_download_failed"
+msgid "The linked file could not be downloaded: %(error)s"
+msgstr "A hivatkozott fájlt nem sikerült letölteni: %(error)s"
+
+msgctxt "model:ir.message,text:msg_attachment_link_too_large"
+msgid "The linked file is larger than 100 MB."
+msgstr "A hivatkozott fájl mérete meghaladja a 100 MB-ot."
+
+msgctxt "model:ir.message,text:msg_attachment_reader_group_uniq"
+msgid "Attachment can only have the same Reader Group once."
+msgstr "Ugyanaz az olvasói csoport csak egyszer rendelhető egy melléklethez."
+
+#, python-format
+msgctxt "model:ir.message,text:msg_attachment_without_data"
+msgid "Attachment \"%(attachment)s\" has no file to download."
+msgstr "A(z) „%(attachment)s” mellékletnek nincs letölthető fájlja."
+
+msgctxt "model:ir.message,text:msg_attachment_writer_group_uniq"
+msgid "Attachment can only have the same Writer Group once."
+msgstr "Ugyanaz az írói csoport csak egyszer rendelhető egy melléklethez."
+
+msgctxt "model:ir.message,text:msg_category_group_unique"
+msgid "A group can be linked to a category only once for this access level."
+msgstr ""
+"Egy csoport ezen a hozzáférési szinten csak egyszer kapcsolható egy "
+"kategóriához."
+
+msgctxt "model:ir.message,text:msg_category_name_unique"
+msgid "Category name must be unique per parent."
+msgstr ""
+"A kategórianévnek egyedinek kell lennie az adott szülőkategórián belül."
+
+msgctxt "model:ir.message,text:msg_category_user_unique"
+msgid "A user can be linked to a category only once for this access level."
+msgstr ""
+"Egy felhasználó ezen a hozzáférési szinten csak egyszer kapcsolható egy "
+"kategóriához."
+
+msgctxt "model:ir.message,text:msg_invalid_attachment_link"
+msgid "The attachment link must use HTTP or HTTPS."
+msgstr "A melléklet hivatkozásának HTTP-t vagy HTTPS-t kell használnia."
+
+msgctxt "model:ir.message,text:msg_invalid_output_format"
+msgid "The selected output format is not valid."
+msgstr "A kiválasztott kimeneti formátum érvénytelen."
+
+#, python-format
+msgctxt "model:ir.message,text:msg_missing_categories"
+msgid ""
+"Attachment \"%(document)s\" must have one of the categories inside "
+"\"%(categories)s\"."
+msgstr ""
+"A(z) „%(document)s” mellékletnek a(z) „%(categories)s” valamely "
+"kategóriájába kell tartoznia."
+
+msgctxt "model:ir.message,text:msg_no_attachments_selected"
+msgid "Select at least one attachment."
+msgstr "Válasszon ki legalább egy mellékletet."
+
+#, python-format
+msgctxt "model:ir.message,text:msg_repeated_unique"
+msgid ""
+"Attachment \"%(document)s\" has more than one child category of "
+"\"%(category)s\"."
+msgstr ""
+"A(z) „%(document)s” melléklet a(z) „%(category)s” több alkategóriájába "
+"tartozik."
+
+msgctxt "model:ir.message,text:msg_soffice_not_found"
+msgid "LibreOffice (soffice) is not installed on the server."
+msgstr "A LibreOffice (soffice) nincs telepítve a kiszolgálón."
+
+msgctxt "model:ir.message,text:msg_unnamed_document"
+msgid "unnamed document"
+msgstr "névtelen dokumentum"
+
+msgctxt "model:ir.model.button,string:attachment_create_from_template_button"
+msgid "New Document"
+msgstr "Új dokumentum"
+
+msgctxt "model:ir.ui.menu,name:menu_attachment"
+msgid "Documents & Attachments"
+msgstr "Dokumentumok és mellékletek"
+
+msgctxt "model:ir.ui.menu,name:menu_attachment_by_category"
+msgid "Documents by Category"
+msgstr "Dokumentumok kategóriánként"
+
+msgctxt "model:ir.ui.menu,name:menu_category"
+msgid "Categories"
+msgstr "Kategóriák"
+
+msgctxt "model:ir.ui.menu,name:menu_category_tree"
+msgid "Category Tree"
+msgstr "Kategóriafa"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration"
+msgid "Configuration"
+msgstr "Beállítások"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration_form"
+msgid "Configuration"
+msgstr "Beállítások"
+
+msgctxt "model:ir.ui.menu,name:menu_document_create"
+msgid "New Document"
+msgstr "Új dokumentum"
+
+msgctxt "model:ir.ui.menu,name:menu_document_template"
+msgid "Document Templates"
+msgstr "Dokumentumsablonok"
+
+msgctxt "model:ir.ui.menu,name:menu_office"
+msgid "Office"
+msgstr "Iroda"
+
+msgctxt "model:office.attachment-category,string:"
+msgid "Office Attachment - Category"
+msgstr "Irodai melléklet – Kategória"
+
+msgctxt "model:office.attachment-reader-group,string:"
+msgid "Office Attachment - Reader - Group"
+msgstr "Irodai melléklet – Olvasó – Csoport"
+
+msgctxt "model:office.attachment-writer-group,string:"
+msgid "Office Attachment - Writer - Group"
+msgstr "Irodai melléklet – Író – Csoport"
+
+msgctxt "model:office.attachment.category,string:"
+msgid "Office Attachment Category"
+msgstr "Irodai mellékletkategória"
+
+msgctxt "model:office.attachment.export.start,string:"
+msgid "Office Attachment Export Start"
+msgstr "Irodai melléklet exportálása – Kezdés"
+
+msgctxt "model:office.category,string:"
+msgid "Office Category"
+msgstr "Irodai kategória"
+
+msgctxt "model:office.category-read-only-group,string:"
+msgid "Office Category - Read - Only - Group"
+msgstr "Irodai kategória – Csak olvasás – Csoport"
+
+msgctxt "model:office.category-read-only-user,string:"
+msgid "Office Category - Read - Only - User"
+msgstr "Irodai kategória – Csak olvasás – Felhasználó"
+
+msgctxt "model:office.category-read-write-group,string:"
+msgid "Office Category - Read - Write - Group"
+msgstr "Irodai kategória – Írás és olvasás – Csoport"
+
+msgctxt "model:office.category-read-write-user,string:"
+msgid "Office Category - Read - Write - User"
+msgstr "Irodai kategória – Írás és olvasás – Felhasználó"
+
+msgctxt "model:office.configuration,string:"
+msgid "Office Configuration"
+msgstr "Irodai beállítások"
+
+msgctxt "model:office.document.create.start,string:"
+msgid "Office Document Create Start"
+msgstr "Irodai dokumentum létrehozása – Kezdés"
+
+msgctxt "model:office.document.template,name:template_presentation"
+msgid "Presentation"
+msgstr "Bemutató"
+
+msgctxt "model:office.document.template,name:template_spreadsheet"
+msgid "Spreadsheet"
+msgstr "Táblázat"
+
+msgctxt "model:office.document.template,name:template_text_document"
+msgid "Text Document"
+msgstr "Szöveges dokumentum"
+
+msgctxt "model:office.document.template,string:"
+msgid "Office Document Template"
+msgstr "Irodai dokumentumsablon"
+
+msgctxt "model:office.unlinked,string:"
+msgid "Office Unlinked"
+msgstr "Nem kapcsolt irodai elemek"
+
+msgctxt "model:res.group,name:group_admin"
+msgid "Office Administrator"
+msgstr "Irodai rendszergazda"
+
+msgctxt "model:res.group,name:group_office"
+msgid "Office"
+msgstr "Iroda"
+
+msgctxt "selection:ir.attachment,type:"
+msgid "Text"
+msgstr "Szöveg"
+
+msgctxt "selection:office.attachment.category,record:"
+msgid "Attachment"
+msgstr "Melléklet"
+
+msgctxt "selection:office.attachment.category,record:"
+msgid "Category"
+msgstr "Kategória"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Data"
+msgstr "Adat"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Link"
+msgstr "Hivatkozás"
+
+msgctxt "selection:office.document.template,type:"
+msgid "Text"
+msgstr "Szöveg"
+
+msgctxt "view:ir.attachment:"
+msgid "Access"
+msgstr "Hozzáférés"
+
+msgctxt "view:ir.attachment:"
+msgid "Technical"
+msgstr "Technikai"
+
+msgctxt "view:office.category:"
+msgid "Access"
+msgstr "Hozzáférés"
+
+msgctxt "view:office.category:"
+msgid "Attachments"
+msgstr "Mellékletek"
+
+msgctxt "wizard_button:office.attachment.export,start,download:"
+msgid "Download"
+msgstr "Letöltés"
+
+msgctxt "wizard_button:office.attachment.export,start,end:"
+msgid "Cancel"
+msgstr "Mégse"
+
+msgctxt "wizard_button:office.document.create,start,create_:"
+msgid "Create"
+msgstr "Létrehozás"
+
+msgctxt "wizard_button:office.document.create,start,end:"
+msgid "Cancel"
+msgstr "Mégse"
+
+msgctxt "field:office.chat,unread_messages:"
+msgid "Unread Messages"
+msgstr "Olvasatlan üzenetek"
+
+msgctxt "field:office.chat-res.user,last_read_message:"
+msgid "Last Read Message"
+msgstr "Utolsó elolvasott üzenet"
+
+msgctxt "model:ir.message,text:msg_chat_add_follower"
+msgid "Manage office chat participants using the Users field."
+msgstr "Az irodai csevegés résztvevőit a Felhasználók mezőben kezelheti."
