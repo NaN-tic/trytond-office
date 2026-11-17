@@ -626,7 +626,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                                     f'data:{self.mimetype};base64,{encoded}'),
                                 },
                             }],
-                }], self)
+                }], self, fallback_origin=model)
         if error:
             logger.error('Could not extract image text using AI: %s', response)
             return
@@ -661,7 +661,7 @@ class Attachment(DeactivableMixin, ModelView, metaclass=PoolMeta):
                     }, {
                     'role': 'user',
                     'content': self.content,
-                    }], self)
+                    }], self, fallback_origin=model)
         if error:
             logger.error('Could not analyze attachment: %s', response)
             return
