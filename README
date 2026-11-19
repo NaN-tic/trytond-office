@@ -8,6 +8,11 @@ Installing
 
 See INSTALL
 
+Markdown attachment exports support fenced ``mermaid`` diagrams using
+``mmdr>=0.3,<0.4`` and ``markdown-it-py>=3,<5``, as in nantic_connection.
+Install these Python packages on the server. Diagrams are embedded as PNG
+images in HTML, PDF, Microsoft Office and OpenDocument exports.
+
 
 License
 -------
