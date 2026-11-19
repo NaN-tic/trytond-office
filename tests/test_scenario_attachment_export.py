@@ -26,7 +26,13 @@ class TestAttachmentExport(unittest.TestCase):
         with config.set_context(default_unlinked=True):
             markdown = Attachment(
                 name='Guide', type='text',
-                content='# Guide\n\nA **formatted** paragraph.')
+                content=(
+                    '# Guide\n\nA **formatted** paragraph.\n\n'
+                    '```mermaid\nflowchart LR\nA[Start] --> B[Finish]\n```'
+                    '\n\nBetween diagrams.\n\n'
+                    '~~~mermaid\nsequenceDiagram\nAlice->>Bob: Hello\n~~~'
+                    '\n\n```python\nprint("ordinary code")\n```'
+                    '\n\nFinal paragraph.'))
             markdown.save()
             pdf = Attachment(
                 name='existing.pdf', type='data', data=b'%PDF-original')
@@ -44,12 +50,34 @@ class TestAttachmentExport(unittest.TestCase):
             config=config)
         self.assertEqual(extension, 'docx')
         self.assertTrue(zipfile.is_zipfile(io.BytesIO(content)))
+        with zipfile.ZipFile(io.BytesIO(content)) as archive:
+            self.assertEqual(len([
+                path for path in archive.namelist()
+                if path.startswith('word/media/')]), 2)
 
         extension, content, _, _ = launch_action(
             'office.report_attachment_open_document', [markdown],
             config=config)
         self.assertEqual(extension, 'odt')
         self.assertTrue(zipfile.is_zipfile(io.BytesIO(content)))
+        with zipfile.ZipFile(io.BytesIO(content)) as archive:
+            self.assertEqual(len([
+                path for path in archive.namelist()
+                if path.startswith('Pictures/')]), 2)
+
+        wizard = launch_action(
+            'office.wizard_attachment_export', [markdown], config=config)
+        wizard.form.format = 'html'
+        wizard.execute('download')
+        extension, content, _, _ = wizard.actions[0]
+        self.assertEqual(extension, 'html')
+        html = content.decode('utf-8')
+        self.assertEqual(html.count('data:image/png;base64,'), 2)
+        self.assertNotIn('flowchart LR', html)
+        self.assertIn('<strong>formatted</strong>', html)
+        self.assertIn('Between diagrams.', html)
+        self.assertIn('Final paragraph.', html)
+        self.assertIn('class="language-python"', html)
 
         extension, content, _, _ = launch_action(
             'office.report_attachment_pdf', [pdf], config=config)

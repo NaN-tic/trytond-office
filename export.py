@@ -1,3 +1,4 @@
+import base64
 import io
 import os
 import shutil
@@ -11,6 +12,7 @@ from urllib.parse import unquote, urlparse
 from urllib.request import Request, urlopen
 
 import markdown
+from markdown_it import MarkdownIt
 
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
@@ -162,14 +164,33 @@ def _output_extension(source_extension, family):
 
 
 def _markdown_html(content):
+    content = content or ''
+    lines = content.splitlines(keepends=True)
+    parts = []
+    position = 0
+    for token in MarkdownIt('commonmark').enable('table').parse(content):
+        if token.type != 'fence' or token.info.strip().lower() != 'mermaid':
+            continue
+        import mmdr
+        start, end = token.map
+        parts.append(''.join(lines[position:start]))
+        # Embed PNGs so LibreOffice and PDF exports retain the diagrams too.
+        diagram = base64.b64encode(
+            mmdr.render(token.content).png()).decode('ascii')
+        parts.append(
+            '\n\n<img alt="Mermaid diagram" '
+            f'src="data:image/png;base64,{diagram}" />\n\n')
+        position = end
+    parts.append(''.join(lines[position:]))
     body = markdown.markdown(
-        content or '', output_format='xhtml',
+        ''.join(parts), output_format='xhtml',
         extensions=['fenced_code', 'tables'])
     return (
         '<!DOCTYPE html><html><head><meta charset="utf-8">'
         '<style>body{font-family:sans-serif;line-height:1.5;max-width:50em;'
         'margin:2em auto;padding:0 1em}pre{white-space:pre-wrap}table{border-'
-        'collapse:collapse}td,th{border:1px solid #aaa;padding:.35em}</style>'
+        'collapse:collapse}td,th{border:1px solid #aaa;padding:.35em}'
+        'img{max-width:100%;height:auto}</style>'
         f'</head><body>{body}</body></html>').encode('utf-8')
 
 
